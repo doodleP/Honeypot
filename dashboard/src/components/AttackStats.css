@@ -1,0 +1,72 @@
+.attack-stats .stats-overview {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.stat-box {
+  background: #0f3460;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  flex: 1;
+}
+
+.stat-value {
+  font-size: 48px;
+  font-weight: bold;
+  color: #ff6b9d;
+  margin-bottom: 10px;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: #aaa;
+  text-transform: uppercase;
+}
+
+.charts-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.chart-container {
+  background: #0f3460;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.chart-container h3 {
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.attack-types-list {
+  margin-top: 20px;
+}
+
+.attack-types-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.attack-types-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background: #0f3460;
+  margin-bottom: 8px;
+  border-radius: 4px;
+}
+
+.attack-type {
+  font-family: monospace;
+  font-size: 14px;
+}
+
+.attack-count {
+  font-weight: bold;
+  color: #ff6b9d;
+}

@@ -1,0 +1,47 @@
+.geo-map {
+  position: sticky;
+  top: 20px;
+}
+
+.geo-list {
+  margin-top: 15px;
+}
+
+.geo-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.geo-country {
+  min-width: 80px;
+  font-weight: bold;
+}
+
+.geo-bar {
+  flex: 1;
+  height: 20px;
+  background: #0f3460;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.geo-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  transition: width 0.3s;
+}
+
+.geo-count {
+  min-width: 40px;
+  text-align: right;
+  font-weight: bold;
+  color: #ff6b9d;
+}
+
+.no-geo-data {
+  text-align: center;
+  padding: 40px;
+  color: #aaa;
+}

@@ -1,0 +1,33 @@
+.coupon-abuse .abuse-list {
+  margin-top: 15px;
+}
+
+.abuse-item {
+  background: #0f3460;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.abuse-code {
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 18px;
+  color: #ff6b9d;
+}
+
+.abuse-stats {
+  display: flex;
+  gap: 15px;
+  font-size: 14px;
+  color: #aaa;
+}
+
+.no-abuse {
+  text-align: center;
+  padding: 40px;
+  color: #aaa;
+}

@@ -1,0 +1,25 @@
+.checkout-page {
+  padding: 40px 0;
+}
+
+.checkout-form {
+  max-width: 500px;
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+}
+
+.checkout-total {
+  margin: 20px 0;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 5px;
+}
+
+.message {
+  padding: 15px;
+  margin: 20px 0;
+  border-radius: 5px;
+  background: #e7f3ff;
+  color: #0066cc;
+}

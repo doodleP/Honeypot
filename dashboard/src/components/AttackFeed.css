@@ -1,0 +1,82 @@
+.attack-feed {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.feed-container {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.feed-item {
+  background: #0f3460;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  border-left: 4px solid #667eea;
+}
+
+.feed-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.feed-timestamp {
+  font-size: 12px;
+  color: #aaa;
+}
+
+.feed-severity {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: bold;
+  color: white;
+}
+
+.feed-body {
+  font-size: 14px;
+}
+
+.feed-type {
+  font-family: monospace;
+  font-weight: bold;
+  color: #ff6b9d;
+  margin-bottom: 5px;
+}
+
+.feed-ip {
+  color: #36a2eb;
+  margin-bottom: 5px;
+}
+
+.feed-endpoint {
+  color: #aaa;
+  margin-bottom: 5px;
+}
+
+.feed-payload {
+  background: #000;
+  padding: 8px;
+  border-radius: 4px;
+  margin-top: 8px;
+  overflow-x: auto;
+}
+
+.feed-payload code {
+  color: #ffd93d;
+  font-size: 12px;
+}
+
+.feed-geo {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #aaa;
+}
+
+.no-attacks {
+  text-align: center;
+  padding: 40px;
+  color: #aaa;
+}
