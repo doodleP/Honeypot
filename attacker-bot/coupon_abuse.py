@@ -36,8 +36,10 @@ def enumerate_coupons():
     for i, coupon in enumerate(COUPON_PATTERNS):
         try:
             # Rotate user agent occasionally for evasion
-            if i % 5 == 0:
+            if i % 5 == 0 and i > 0:
+                print(f"\n🔄 Rotating user agent for stealth...")
                 attacker.rotate_user_agent()
+                print()
             
             response = attacker.smart_request(
                 method="GET",

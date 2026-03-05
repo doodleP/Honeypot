@@ -66,8 +66,13 @@ class RealisticAttacker:
     
     def rotate_user_agent(self):
         """Rotate user agent for evasion"""
+        old_agent = self.user_agent
         self.user_agent = random.choice(REALISTIC_USER_AGENTS)
         self.session.headers["User-Agent"] = self.user_agent
+        # Print rotation so you can see it happening
+        print(f"🔄 User Agent Rotated:")
+        print(f"   Old: {old_agent[:50]}...")
+        print(f"   New: {self.user_agent[:50]}...")
     
     def get_realistic_referer(self, endpoint="/"):
         """Get realistic referer based on endpoint"""
@@ -187,6 +192,7 @@ class RealisticAttacker:
                 
                 # Rotate user agent periodically for evasion
                 if self.request_count % random.randint(5, 10) == 0:
+                    print(f"   🔄 Rotating user agent for evasion...")
                     self.rotate_user_agent()
                 
                 return response
