@@ -34,7 +34,6 @@ HoneyGlow Trap is a cybersecurity honeypot that:
                      └─────────┘
 ```
 
-## 🚀 Quick Start
 
 ### Prerequisites
 - Docker & Docker Compose
