@@ -1,15 +1,245 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Jost:wght@300;400;500&display=swap');
+
 .coupons-page {
-  padding: 40px 0;
+  background-color: #f5f0eb;
+  min-height: 100vh;
+  padding: 60px 80px;
+  font-family: 'Jost', sans-serif;
 }
 
+/* ── PAGE HEADER ── */
+.coupons-header {
+  margin-bottom: 48px;
+  border-bottom: 1px solid #ddd5c8;
+  padding-bottom: 20px;
+}
+
+.coupons-header h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 42px;
+  font-weight: 400;
+  color: #2c1f14;
+  letter-spacing: -0.5px;
+}
+
+.coupons-header p {
+  font-size: 13px;
+  font-weight: 300;
+  color: #9e8977;
+  margin-top: 6px;
+  letter-spacing: 0.5px;
+}
+
+/* ── LAYOUT ── */
+.coupons-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+  max-width: 960px;
+}
+
+/* ── CARD ── */
+.coupon-card {
+  background: #fff;
+  border: 1px solid #e8e0d6;
+  border-radius: 4px;
+  padding: 40px;
+}
+
+.coupon-card h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 400;
+  color: #2c1f14;
+  margin-bottom: 28px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f0ebe4;
+}
+
+/* ── FORM ── */
+.form-group {
+  margin-bottom: 24px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: #9e8977;
+  margin-bottom: 10px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #ddd5c8;
+  border-radius: 2px;
+  font-family: 'Jost', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  color: #2c1f14;
+  background: #faf7f4;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.form-group input::placeholder {
+  color: #c4b8ac;
+}
+
+.form-group input:focus {
+  border-color: #c9a97a;
+  background: #fff;
+}
+
+/* ── BUTTONS ── */
+.btn-apply {
+  background: #2c1f14;
+  color: #faf5ef;
+  border: none;
+  padding: 13px 32px;
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-right: 10px;
+  margin-top: 4px;
+}
+
+.btn-apply:hover {
+  background: #c9a97a;
+  color: #2c1f14;
+}
+
+.btn-list {
+  background: transparent;
+  color: #5c3d2e;
+  border: 1px solid #ddd5c8;
+  padding: 13px 32px;
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+  margin-top: 4px;
+}
+
+.btn-list:hover {
+  border-color: #c9a97a;
+  color: #c9a97a;
+}
+
+/* ── ERROR ── */
+.coupon-error {
+  margin-top: 20px;
+  padding: 14px 18px;
+  background: #fdf0f0;
+  border-left: 3px solid #c0392b;
+  border-radius: 2px;
+  font-size: 13px;
+  font-weight: 400;
+  color: #c0392b;
+}
+
+/* ── RESULT ── */
 .coupon-result {
   margin-top: 20px;
-  padding: 15px;
-  background: #f8f9fa;
-  border-radius: 5px;
+  background: #f5f0eb;
+  border: 1px solid #e8e0d6;
+  border-left: 3px solid #c9a97a;
+  border-radius: 2px;
+  padding: 20px;
 }
 
+.coupon-result h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #2c1f14;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+
+/* VULNERABILITY: Raw JSON output exposes all coupon data including internal fields */
 .coupon-result pre {
   margin: 0;
-  font-size: 14px;
+  font-size: 12px;
+  font-family: 'Courier New', monospace;
+  color: #5c3d2e;
+  white-space: pre-wrap;
+  word-break: break-all;
+  line-height: 1.6;
+}
+
+/* ── INFO PANEL ── */
+.coupon-info-panel {
+  background: #2c1f14;
+  border-radius: 4px;
+  padding: 40px;
+  color: #faf5ef;
+}
+
+.coupon-info-panel h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: #c9a97a;
+  margin-bottom: 24px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(201, 169, 122, 0.2);
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(201, 169, 122, 0.1);
+  font-size: 13px;
+}
+
+.info-row span:first-child {
+  color: rgba(250, 245, 239, 0.5);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.info-row span:last-child {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  color: #faf5ef;
+}
+
+.info-note {
+  margin-top: 20px;
+  font-size: 11px;
+  font-weight: 300;
+  color: rgba(250, 245, 239, 0.35);
+  line-height: 1.7;
+  letter-spacing: 0.3px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .coupons-page {
+    padding: 40px 24px;
+  }
+  .coupons-layout {
+    grid-template-columns: 1fr;
+  }
+  .coupon-card {
+    padding: 28px 24px;
+  }
 }
