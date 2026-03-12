@@ -2755,3 +2755,43 @@
 {"level":"info","message":"Connected to MongoDB","service":"honeyglow-backend","timestamp":"2026-03-11 21:46:22"}
 {"level":"info","message":"Connected to MongoDB","service":"honeyglow-backend","timestamp":"2026-03-11 21:46:22"}
 {"level":"info","message":"HoneyGlow Trap Backend running on port 3001","service":"honeyglow-backend","timestamp":"2026-03-11 21:46:22"}
+{"level":"info","message":"Connected to MongoDB","service":"honeyglow-backend","timestamp":"2026-03-12 14:48:01"}
+{"level":"info","message":"HoneyGlow Trap Backend running on port 3001","service":"honeyglow-backend","timestamp":"2026-03-12 14:48:01"}
+{"level":"warn","message":"Attack detected: SQL_INJECTION from ::ffff:172.19.0.1","payload":"#","service":"honeyglow-backend","severity":"HIGH","timestamp":"2026-03-12 14:51:37","type":"SQL_INJECTION"}
+{"level":"warn","message":"Attack detected: COUPON_ABUSE from ::ffff:172.19.0.1","payload":"Suspicious coupon code: FREESHIP","service":"honeyglow-backend","severity":"LOW","timestamp":"2026-03-12 14:52:34","type":"COUPON_ABUSE"}
+{"level":"info","message":"Invalid / disallowed coupon attempt: DISCOUNT","service":"honeyglow-backend","timestamp":"2026-03-12 14:52:36"}
+{"level":"info","message":"Invalid / disallowed coupon attempt: PROMO","service":"honeyglow-backend","timestamp":"2026-03-12 14:52:37"}
+{"level":"info","message":"Invalid / disallowed coupon attempt: SAVE50","service":"honeyglow-backend","timestamp":"2026-03-12 14:52:39"}
+{"level":"warn","message":"Attack detected: COUPON_ABUSE from ::ffff:172.19.0.1","payload":"Suspicious coupon code: 100OFF","service":"honeyglow-backend","severity":"LOW","timestamp":"2026-03-12 14:52:39","type":"COUPON_ABUSE"}
+{"level":"info","message":"Invalid / disallowed coupon attempt: 100OFF","service":"honeyglow-backend","timestamp":"2026-03-12 14:52:39"}
+{"level":"warn","message":"Attack detected: COUPON_ABUSE from ::ffff:172.19.0.1","payload":"Suspicious coupon code: FREE","service":"honeyglow-backend","severity":"LOW","timestamp":"2026-03-12 14:52:41","type":"COUPON_ABUSE"}
+{"level":"info","message":"Invalid / disallowed coupon attempt: FREE","service":"honeyglow-backend","timestamp":"2026-03-12 14:52:41"}
+{"level":"warn","message":"Attack detected: COUPON_ABUSE from ::ffff:172.19.0.1","payload":"Suspicious coupon code: ADMIN","service":"honeyglow-backend","severity":"LOW","timestamp":"2026-03-12 14:52:44","type":"COUPON_ABUSE"}
+{"level":"info","message":"Invalid / disallowed coupon attempt: ADMIN","service":"honeyglow-backend","timestamp":"2026-03-12 14:52:44"}
+{"level":"warn","message":"Attack detected: COUPON_ABUSE from ::ffff:172.19.0.1","payload":"Suspicious coupon code: TEST","service":"honeyglow-backend","severity":"LOW","timestamp":"2026-03-12 14:52:45","type":"COUPON_ABUSE"}
+{"level":"info","message":"Invalid / disallowed coupon attempt: TEST","service":"honeyglow-backend","timestamp":"2026-03-12 14:52:45"}
+{"level":"info","message":"Invalid / disallowed coupon attempt: COUPON","service":"honeyglow-backend","timestamp":"2026-03-12 14:52:47"}
+{"level":"info","message":"Invalid / disallowed coupon attempt: DEAL","service":"honeyglow-backend","timestamp":"2026-03-12 14:52:48"}
+{"level":"info","message":"Invalid / disallowed coupon attempt: SPECIAL","service":"honeyglow-backend","timestamp":"2026-03-12 14:52:49"}
+{"level":"info","message":"Invalid / disallowed coupon attempt: HOLIDAY","service":"honeyglow-backend","timestamp":"2026-03-12 14:52:50"}
+{"level":"info","message":"Invalid / disallowed coupon attempt: NEWUSER","service":"honeyglow-backend","timestamp":"2026-03-12 14:52:51"}
+{"level":"info","message":"Invalid / disallowed coupon attempt: 4TDLPQIT","service":"honeyglow-backend","timestamp":"2026-03-12 14:52:53"}
+{"level":"info","message":"Invalid / disallowed coupon attempt: S0P60OKR","service":"honeyglow-backend","timestamp":"2026-03-12 14:52:55"}
+{"level":"info","message":"Invalid / disallowed coupon attempt: HMMN1XAC","service":"honeyglow-backend","timestamp":"2026-03-12 14:52:57"}
+{"level":"info","message":"Invalid / disallowed coupon attempt: 2Y32RNR9","service":"honeyglow-backend","timestamp":"2026-03-12 14:52:59"}
+{"level":"info","message":"Invalid / disallowed coupon attempt: 8HMIK8ID","service":"honeyglow-backend","timestamp":"2026-03-12 14:53:00"}
+{"level":"info","message":"Invalid / disallowed coupon attempt: RDODYARK","service":"honeyglow-backend","timestamp":"2026-03-12 14:53:02"}
+{"level":"info","message":"Invalid / disallowed coupon attempt: 3Y0I34UP","service":"honeyglow-backend","timestamp":"2026-03-12 14:53:04"}
+{"level":"info","message":"Invalid / disallowed coupon attempt: GQKU7PKA","service":"honeyglow-backend","timestamp":"2026-03-12 14:53:05"}
+{"level":"info","message":"Invalid / disallowed coupon attempt: Y5MD5SW3","service":"honeyglow-backend","timestamp":"2026-03-12 14:53:06"}
+{"level":"info","message":"Invalid / disallowed coupon attempt: OSL5DC29","service":"honeyglow-backend","timestamp":"2026-03-12 14:53:07"}
+{"level":"info","message":"Invalid / disallowed coupon attempt: YMPVFPNG","service":"honeyglow-backend","timestamp":"2026-03-12 14:53:09"}
+{"level":"info","message":"Invalid / disallowed coupon attempt: 86EZHKHZ","service":"honeyglow-backend","timestamp":"2026-03-12 14:53:11"}
+{"level":"info","message":"Invalid / disallowed coupon attempt: FOLDUVEJ","service":"honeyglow-backend","timestamp":"2026-03-12 14:53:13"}
+{"level":"info","message":"Invalid / disallowed coupon attempt: CX34OZ4X","service":"honeyglow-backend","timestamp":"2026-03-12 14:53:13"}
+{"level":"info","message":"Invalid / disallowed coupon attempt: NICDUM22","service":"honeyglow-backend","timestamp":"2026-03-12 14:53:16"}
+{"level":"info","message":"Invalid / disallowed coupon attempt: IHQFN3FX","service":"honeyglow-backend","timestamp":"2026-03-12 14:53:18"}
+{"level":"info","message":"Invalid / disallowed coupon attempt: 60BBCL90","service":"honeyglow-backend","timestamp":"2026-03-12 14:53:19"}
+{"level":"info","message":"Invalid / disallowed coupon attempt: MYBHMJDT","service":"honeyglow-backend","timestamp":"2026-03-12 14:53:20"}
+{"level":"info","message":"Invalid / disallowed coupon attempt: DDCKFZ42","service":"honeyglow-backend","timestamp":"2026-03-12 14:53:21"}
+{"level":"info","message":"Invalid / disallowed coupon attempt: YH4IKAMA","service":"honeyglow-backend","timestamp":"2026-03-12 14:53:22"}

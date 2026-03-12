@@ -9,6 +9,7 @@ import time
 import requests
 from datetime import datetime
 import json
+from pathlib import Path
 
 # Realistic User Agents (Chrome, Firefox, Safari, Edge)
 REALISTIC_USER_AGENTS = [
@@ -47,6 +48,7 @@ class RealisticAttacker:
         self.request_count = 0
         self.blocked_count = 0
         self.user_agent = random.choice(REALISTIC_USER_AGENTS)
+        self.log_dir = Path(__file__).resolve().parent
         self._setup_headers()
     
     def _setup_headers(self):
@@ -226,11 +228,16 @@ class RealisticAttacker:
     
     def save_attack_log(self, filename="attack_log.json"):
         """Save attack log to file"""
+        if not self.attack_log:
+            return
+
         try:
-            with open(filename, "a") as f:
+            log_path = self.log_dir / Path(filename).name
+            with open(log_path, "a", encoding="utf-8") as f:
                 for entry in self.attack_log:
                     f.write(json.dumps(entry) + "\n")
-            print(f"\n📊 Attack log saved to {filename}")
+            self.attack_log.clear()
+            print(f"\n📊 Attack log saved to {log_path}")
         except Exception as e:
             print(f"Error saving log: {e}")
     
