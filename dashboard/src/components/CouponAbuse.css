@@ -1,33 +1,91 @@
-.coupon-abuse .abuse-list {
-  margin-top: 15px;
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Jost:wght@300;400;500;600&display=swap');
+
+.coupon-abuse {
+  background: #0d1117;
+  border: 1px solid rgba(99, 132, 255, 0.15);
+  border-radius: 4px;
+  padding: 28px 32px;
+  transition: border-color 0.2s;
+}
+
+.coupon-abuse:hover {
+  border-color: rgba(99, 132, 255, 0.3);
+}
+
+.coupon-abuse h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  font-weight: 400;
+  color: #e8eeff;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(99, 132, 255, 0.1);
+  letter-spacing: -0.3px;
+}
+
+/* ── ABUSE LIST ── */
+.abuse-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
 }
 
 .abuse-item {
-  background: #0f3460;
-  padding: 15px;
-  margin-bottom: 10px;
-  border-radius: 6px;
+  background: rgba(224, 92, 92, 0.04);
+  border: 1px solid rgba(224, 92, 92, 0.12);
+  border-left: 3px solid rgba(224, 92, 92, 0.5);
+  border-radius: 2px;
+  padding: 14px 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.abuse-item:hover {
+  background: rgba(224, 92, 92, 0.08);
+  border-color: rgba(224, 92, 92, 0.3);
 }
 
 .abuse-code {
-  font-family: monospace;
-  font-weight: bold;
-  font-size: 18px;
-  color: #ff6b9d;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  font-weight: 600;
+  color: #e05c5c;
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
 .abuse-stats {
   display: flex;
-  gap: 15px;
-  font-size: 14px;
-  color: #aaa;
+  gap: 20px;
+  align-items: center;
 }
 
+.abuse-stats span {
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: rgba(180, 195, 255, 0.4);
+}
+
+.abuse-stats span strong {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #6384ff;
+  margin-left: 4px;
+}
+
+/* ── EMPTY STATE ── */
 .no-abuse {
   text-align: center;
-  padding: 40px;
-  color: #aaa;
+  padding: 48px 0;
+  font-family: 'Jost', sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  color: rgba(180, 195, 255, 0.25);
+  letter-spacing: 1px;
 }

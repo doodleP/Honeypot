@@ -24,12 +24,18 @@ function CouponAbuse() {
   }
 
   if (loading) {
-    return <div className="card">Loading coupon abuse data...</div>
+    return (
+      <div className="coupon-abuse">
+        <h2>Coupon Abuse Tracker</h2>
+        <div className="no-abuse">Loading coupon abuse data...</div>
+      </div>
+    )
   }
 
   return (
-    <div className="coupon-abuse card">
+    <div className="coupon-abuse">
       <h2>Coupon Abuse Tracker</h2>
+
       {abusedCoupons.length === 0 ? (
         <div className="no-abuse">No coupon abuse detected</div>
       ) : (
@@ -38,9 +44,9 @@ function CouponAbuse() {
             <div key={coupon.code} className="abuse-item">
               <div className="abuse-code">{coupon.code}</div>
               <div className="abuse-stats">
-                <span>Used: {coupon.usedCount}</span>
+                <span>Used <strong>{coupon.usedCount}</strong></span>
                 {coupon.usageLimit && (
-                  <span>Limit: {coupon.usageLimit}</span>
+                  <span>Limit <strong>{coupon.usageLimit}</strong></span>
                 )}
               </div>
             </div>
