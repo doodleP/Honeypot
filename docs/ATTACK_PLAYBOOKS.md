@@ -176,7 +176,7 @@ This document describes common attack scenarios and how the honeypot detects and
 
 ---
 
-## 8. Credential Stuffing Attack
+## 8. Brute Force Attack
 
 ### Attack Vector
 - **Endpoint**: `/api/auth/login`
@@ -189,7 +189,7 @@ This document describes common attack scenarios and how the honeypot detects and
 ### Detection
 - Rate-based detection
 - Multiple failed login attempts
-- Logged as `CREDENTIAL_STUFFING` attack type
+- Logged as `BRUTE_FORCE` attack type
 - Severity: MEDIUM
 
 ### Logged Information

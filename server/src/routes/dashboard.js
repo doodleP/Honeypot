@@ -5,24 +5,41 @@ const logger = require('../utils/logger');
 
 const router = express.Router();
 
+const buildAttackFilter = (since) => ({
+  timestamp: { $gte: since },
+  attackType: { $ne: 'UNKNOWN' }
+});
+
+const normalizeAttackType = (attackType) => (
+  attackType === 'CREDENTIAL_STUFFING' ? 'BRUTE_FORCE' : attackType
+);
+
 // Get attack statistics
 router.get('/stats', async (req, res) => {
   try {
     const { hours = 24 } = req.query;
     const since = new Date(Date.now() - hours * 60 * 60 * 1000);
+    const attackFilter = buildAttackFilter(since);
     
-    const totalAttacks = await AttackLog.countDocuments({ timestamp: { $gte: since } });
+    const totalAttacks = await AttackLog.countDocuments(attackFilter);
     
     // Attack type distribution
     const attackTypes = await AttackLog.aggregate([
-      { $match: { timestamp: { $gte: since } } },
+      { $match: attackFilter },
+      {
+        $project: {
+          attackType: {
+            $cond: [{ $eq: ['$attackType', 'CREDENTIAL_STUFFING'] }, 'BRUTE_FORCE', '$attackType']
+          }
+        }
+      },
       { $group: { _id: '$attackType', count: { $sum: 1 } } },
       { $sort: { count: -1 } }
     ]);
     
     // Top attacking IPs
     const topIPs = await AttackLog.aggregate([
-      { $match: { timestamp: { $gte: since } } },
+      { $match: attackFilter },
       { $group: { _id: '$ip', count: { $sum: 1 }, lastSeen: { $max: '$timestamp' } } },
       { $sort: { count: -1 } },
       { $limit: 10 }
@@ -30,21 +47,21 @@ router.get('/stats', async (req, res) => {
     
     // Geographic distribution
     const geoDistribution = await AttackLog.aggregate([
-      { $match: { timestamp: { $gte: since }, 'geoip.country': { $exists: true } } },
+      { $match: { ...attackFilter, 'geoip.country': { $exists: true } } },
       { $group: { _id: '$geoip.country', count: { $sum: 1 } } },
       { $sort: { count: -1 } }
     ]);
     
     // Severity distribution
     const severityDist = await AttackLog.aggregate([
-      { $match: { timestamp: { $gte: since } } },
+      { $match: attackFilter },
       { $group: { _id: '$severity', count: { $sum: 1 } } }
     ]);
     
     res.json({
       totalAttacks,
       timeRange: `${hours} hours`,
-      attackTypes: attackTypes.map(a => ({ type: a._id, count: a.count })),
+      attackTypes: attackTypes.map(a => ({ type: normalizeAttackType(a._id), count: a.count })),
       topIPs: topIPs.map(ip => ({ ip: ip._id, count: ip.count, lastSeen: ip.lastSeen })),
       geoDistribution: geoDistribution.map(g => ({ country: g._id, count: g.count })),
       severityDistribution: severityDist.map(s => ({ severity: s._id, count: s.count }))
@@ -60,12 +77,17 @@ router.get('/feed', async (req, res) => {
   try {
     const { limit = 50 } = req.query;
     
-    const attacks = await AttackLog.find()
+    const attacks = await AttackLog.find({ attackType: { $ne: 'UNKNOWN' } })
       .sort({ timestamp: -1 })
       .limit(parseInt(limit))
-      .select('timestamp ip attackType endpoint payload severity geoip');
+      .select('timestamp ip method attackType endpoint payload severity geoip');
     
-    res.json({ attacks });
+    res.json({
+      attacks: attacks.map(attack => ({
+        ...attack.toObject(),
+        attackType: normalizeAttackType(attack.attackType)
+      }))
+    });
   } catch (error) {
     logger.error('Dashboard feed error:', error);
     res.status(500).json({ error: 'Failed to fetch attack feed' });
@@ -96,10 +118,11 @@ router.get('/waf-rules', async (req, res) => {
   try {
     const { hours = 24 } = req.query;
     const since = new Date(Date.now() - hours * 60 * 60 * 1000);
+    const attackFilter = buildAttackFilter(since);
     
     // Get top attacking IPs
     const topIPs = await AttackLog.aggregate([
-      { $match: { timestamp: { $gte: since } } },
+      { $match: attackFilter },
       { $group: { _id: '$ip', count: { $sum: 1 } } },
       { $sort: { count: -1 } },
       { $limit: 20 }

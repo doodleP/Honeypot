@@ -15,6 +15,7 @@ const attackLogSchema = new mongoose.Schema({
       'SQL_INJECTION',
       'XSS',
       'LFI',
+      'BRUTE_FORCE',
       'CREDENTIAL_STUFFING',
       'BUSINESS_LOGIC_ABUSE',
       'PRIVILEGE_ESCALATION',
