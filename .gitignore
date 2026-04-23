@@ -16,3 +16,5 @@ docker-compose.override.yml
 .venv311/
 threat-intel/.venv/
 threat-intel/.venv311/
+threat-intel/output/threat_intelligence_report.md
+threat-intel/output/threat_intelligence_report.pdf

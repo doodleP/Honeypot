@@ -28,17 +28,43 @@ EMAIL_PATTERNS = [
     "admin@admin.com", "root@localhost", "test@example.com"
 ]
 
+SEEDED_CREDENTIALS = [
+    ("test@example.com", "password123", "Seeded Test User"),
+    ("admin@example.com", "admin", "Seeded Admin Lookalike"),
+]
+
+
+def ensure_seed_accounts():
+    """Create predictable accounts so the attack produces real successful hits."""
+    seeded = []
+    for email, password, name in SEEDED_CREDENTIALS:
+        account = attacker.register_or_login(email, password, name)
+        if account and account.get("token"):
+            seeded.append((email, password))
+    return seeded
+
 def brute_force_login():
     """Simulate credential stuffing attack with realistic behavior"""
     print("🔓 Starting Brute Force Login Attack...")
     print(f"Target: {BASE_URL}/api/auth/login")
     print(f"User Agent: {attacker.user_agent[:60]}...\n")
     
+    if not attacker.check_backend_health():
+        print("Backend is not reachable on /health. Start the honeypot first.")
+        return
+
+    seeded_credentials = ensure_seed_accounts()
+    if seeded_credentials:
+        print(f"Seeded {len(seeded_credentials)} known accounts for credential stuffing.\n")
+
     attack_count = 0
     success_count = 0
-    
-    for email in EMAIL_PATTERNS:
-        for password in COMMON_PASSWORDS[:5]:
+
+    email_targets = list(dict.fromkeys(EMAIL_PATTERNS + [email for email, _ in seeded_credentials]))
+    password_targets = list(dict.fromkeys(COMMON_PASSWORDS[:5] + [password for _, password in seeded_credentials]))
+
+    for email in email_targets:
+        for password in password_targets:
             try:
                 # Use smart_request with retry logic and evasion
                 response = attacker.smart_request(

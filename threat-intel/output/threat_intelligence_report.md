@@ -1,17 +1,16 @@
 # Threat Intelligence Report
 
 ## Summary
-- Total normalized events: 6716
-- Sessions analyzed: 5
-- Overall risk level: HIGH
+- Total normalized events: 4094
+- Sessions analyzed: 4
+- Overall risk level: CRITICAL
 - Attack type distribution:
-  - Normal Traffic: 46
-  - Brute Force: 17
+  - Normal Traffic: 32
+  - Brute Force: 30
+  - SQL Injection: 1
 
 ## Attack Timeline
-- 1776966290.523695 | fe80::c0ef:76ff:fe14:246f | GET  | zeek_http
-- 1776971413.188888 | 172.19.0.1 | GET  | zeek_http
-- 1776971791.806286 | 172.19.0.1 | GET  | zeek_http
+- 1776970945.498429 | 172.19.0.1 | GET  | zeek_http
 - 2026-02-27 05:46:47 |  | UNKNOWN  | app_log
 - 2026-02-27 05:46:47 |  | UNKNOWN  | app_log
 - 2026-02-27 05:48:09 |  | UNKNOWN  | app_log
@@ -209,9 +208,11 @@
 - 2026-02-27 07:41:30 |  | UNKNOWN  | app_log
 - 2026-02-27 07:41:30 |  | UNKNOWN  | app_log
 - 2026-02-27 07:41:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:42:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:42:30 |  | UNKNOWN  | app_log
 
 ## Session Analysis
-### Session fe80::c0ef:76ff:fe14:246f:143
+### Session 172.19.0.1:42276
 - Risk: LOW
 - Inferred goal: unknown
 - Skill level: unknown
@@ -219,27 +220,7 @@
 - Techniques used:
   - N/A - No Malicious Technique (N/A)
 - Key observations:
-  - 1776966290.523695 Normal Traffic (0.50): No strong malicious indicators detected.
-
-### Session 172.19.0.1:56214
-- Risk: LOW
-- Inferred goal: unknown
-- Skill level: unknown
-- Actor type: human
-- Techniques used:
-  - N/A - No Malicious Technique (N/A)
-- Key observations:
-  - 1776971413.188888 Normal Traffic (0.50): No strong malicious indicators detected.
-
-### Session 172.19.0.1:53120
-- Risk: LOW
-- Inferred goal: unknown
-- Skill level: unknown
-- Actor type: human
-- Techniques used:
-  - N/A - No Malicious Technique (N/A)
-- Key observations:
-  - 1776971791.806286 Normal Traffic (0.50): No strong malicious indicators detected.
+  - 1776970945.498429 Normal Traffic (0.50): No strong malicious indicators detected.
 
 ### Session unknown
 - Risk: LOW
@@ -266,19 +247,30 @@
 - Skill level: low
 - Actor type: human
 - Techniques used:
-  - N/A - No Malicious Technique (N/A)
   - T1110 - Brute Force (Credential Access)
 - Key observations:
-  - 2026-03-05T12:31:28.913000 Normal Traffic (0.50): No strong malicious indicators detected.
-  - 2026-03-05T12:32:13.704000 Normal Traffic (0.50): No strong malicious indicators detected.
-  - 2026-03-05T12:33:58.841000 Brute Force (0.60): Detected repeated authentication-related activity.
-  - 2026-03-05T12:33:59.210000 Brute Force (0.60): Detected repeated authentication-related activity.
-  - 2026-03-05T12:34:40.834000 Brute Force (0.60): Detected repeated authentication-related activity.
-  - 2026-03-05T12:34:41.146000 Brute Force (0.60): Detected repeated authentication-related activity.
-  - 2026-03-05T12:34:41.469000 Brute Force (0.60): Detected repeated authentication-related activity.
-  - 2026-03-05T12:34:41.777000 Brute Force (0.60): Detected repeated authentication-related activity.
-  - 2026-03-05T12:34:42.090000 Brute Force (0.60): Detected repeated authentication-related activity.
-  - 2026-03-05T12:34:42.421000 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-04-23T14:03:43.524000 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-04-23T14:03:45.468000 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-04-23T14:03:47.141000 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-04-23T14:03:50.979000 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-04-23T14:03:53.006000 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-04-23T14:03:57.160000 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-04-23T14:03:58.707000 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-04-23T14:04:00.980000 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-04-23T14:04:02.138000 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-04-23T14:04:04.069000 Brute Force (0.60): Detected repeated authentication-related activity.
+
+### Session 172.19.0.1
+- Risk: CRITICAL
+- Inferred goal: unknown
+- Skill level: unknown
+- Actor type: human
+- Techniques used:
+  - T1190 - Exploit Public-Facing Application (Initial Access)
+  - N/A - No Malicious Technique (N/A)
+- Key observations:
+  - 2026-04-23T16:03:27.507000 SQL Injection (0.78): Detected SQL injection keywords or tautology patterns.
+  - 2026-04-23T16:21:02.750000 Normal Traffic (0.50): No strong malicious indicators detected.
 
 ## Recommendations
 - Add strict input validation and output encoding for user-controlled fields.

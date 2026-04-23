@@ -128,3 +128,4 @@
 {"timestamp": "2026-04-24T00:26:44.298883", "target": "coupon_abuse", "success": true, "request_count": 45, "blocked_count": 0, "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb", "details": {"coupon": "WELCOME10", "attempt": 9}}
 {"timestamp": "2026-04-24T00:26:45.868007", "target": "coupon_abuse", "success": true, "request_count": 46, "blocked_count": 0, "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb", "details": {"coupon": "WELCOME10", "attempt": 10}}
 {"timestamp": "2026-04-24T00:26:45.868149", "target": "coupon_summary", "success": true, "request_count": 46, "blocked_count": 0, "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb", "details": {"valid_coupons": 3}}
+{"timestamp": "2026-04-24T03:08:52.000790", "target": "coupon_summary", "success": false, "request_count": 0, "blocked_count": 0, "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb", "details": {"valid_coupons": 0}}

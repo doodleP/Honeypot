@@ -249,6 +249,70 @@ class RealisticAttacker:
             "success_rate": f"{((self.request_count - self.blocked_count) / max(1, self.request_count)) * 100:.2f}%"
         }
 
+    def check_backend_health(self):
+        """Verify the honeypot backend is reachable."""
+        try:
+            response = self.session.get(f"{self.base_url}/health", timeout=5)
+            return response.status_code == 200
+        except Exception:
+            return False
+
+    def register_or_login(self, email, password, name="Attacker Bot"):
+        """Create a low-privilege user if missing, otherwise log in."""
+        try:
+            register_response = self.session.post(
+                f"{self.base_url}/api/auth/register",
+                json={"email": email, "password": password, "name": name},
+                timeout=10,
+            )
+
+            if register_response.status_code == 200:
+                data = register_response.json()
+                return {
+                    "token": data.get("token"),
+                    "user": data.get("user", {}),
+                    "created": True,
+                }
+
+            if register_response.status_code == 400 and "already exists" in register_response.text.lower():
+                login_response = self.session.post(
+                    f"{self.base_url}/api/auth/login",
+                    json={"email": email, "password": password},
+                    timeout=10,
+                )
+                if login_response.status_code == 200:
+                    data = login_response.json()
+                    return {
+                        "token": data.get("token"),
+                        "user": data.get("user", {}),
+                        "created": False,
+                    }
+        except Exception:
+            return None
+
+        return None
+
+    def auth_headers(self, token):
+        """Build auth header dict for authenticated probes."""
+        return {"Authorization": f"Bearer {token}"} if token else {}
+
+    def fetch_user_ids(self, token=None, limit=5):
+        """Fetch real Mongo user IDs so IDOR probes use valid targets."""
+        headers = self.auth_headers(token)
+        try:
+            response = self.session.get(f"{self.base_url}/api/users", headers=headers, timeout=10)
+            if response.status_code != 200:
+                return []
+            users = response.json().get("users", [])
+            ids = []
+            for user in users:
+                user_id = user.get("id") or user.get("_id")
+                if user_id:
+                    ids.append(str(user_id))
+            return ids[:limit]
+        except Exception:
+            return []
+
 
 def add_varied_params(params, variation_count=3):
     """

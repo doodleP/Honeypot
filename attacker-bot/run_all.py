@@ -7,6 +7,7 @@ import subprocess
 import sys
 import time
 from pathlib import Path
+import requests
 
 ATTACKS = [
     ("brute_force.py", "Brute Force Login"),
@@ -43,6 +44,13 @@ def main():
     print("Make sure the backend is running on http://localhost:3001")
     print("=" * 60)
     
+    try:
+        requests.get("http://localhost:3001/health", timeout=5).raise_for_status()
+    except Exception:
+        print("\nBackend is not reachable on http://localhost:3001/health")
+        print("Start the honeypot first, then rerun this suite.")
+        raise SystemExit(1)
+
     input("\nPress Enter to start attacks...")
     
     results = []
