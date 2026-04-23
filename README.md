@@ -53,6 +53,15 @@ docker-compose logs -f
 docker-compose down
 ```
 
+## 🧾 Zeek Network Logging (Docker)
+
+This stack includes a Zeek container that passively logs network traffic.
+
+- **How it works**: the `zeek` service shares the `nginx` container network namespace (`network_mode: "service:nginx"`), so it can observe:
+  - attacker ↔ nginx
+  - nginx ↔ backend/frontend/dashboard
+- **Logs output**: `./zeek/logs/` (e.g. `conn.log`, `http.log`)
+
 ### Local Development
 
 ```bash
