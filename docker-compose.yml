@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   mongodb:
     image: mongo:7
@@ -90,6 +88,30 @@ services:
       - dashboard
     networks:
       - honeyglow-network
+
+  zeek:
+    image: zeek/zeek:latest
+    container_name: honeyglow-zeek
+    restart: unless-stopped
+    depends_on:
+      - nginx
+    # Share nginx's network namespace so Zeek can sniff the same interface
+    # and observe attacker <-> nginx and nginx <-> backend/frontend traffic.
+    network_mode: "service:nginx"
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    volumes:
+      - ./zeek/logs:/zeek/logs
+    working_dir: /zeek/logs
+    # Avoid `bash -l` (login shell) which can reset PATH.
+    # `ignore_checksums` helps in containerized/offload scenarios.
+    command:
+      [
+        "bash",
+        "-c",
+        "zeek -C -i eth0 local",
+      ]
 
 volumes:
   mongodb_data:

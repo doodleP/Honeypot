@@ -6,8 +6,13 @@ const attackLogSchema = new mongoose.Schema({
   userAgent: { type: String },
   method: { type: String, required: true },
   endpoint: { type: String, required: true, index: true },
+  url: { type: String },
+  routeParams: { type: mongoose.Schema.Types.Mixed },
   headers: { type: Map, of: String },
+  cookies: { type: mongoose.Schema.Types.Mixed },
+  cookieHeader: { type: String },
   requestBody: { type: mongoose.Schema.Types.Mixed },
+  requestBodyRaw: { type: String },
   queryParams: { type: mongoose.Schema.Types.Mixed },
   attackType: { 
     type: String, 
