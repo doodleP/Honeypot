@@ -1,217 +1,319 @@
-# HoneyGlow Trap 🍯✨
+# HoneyGlow Trap
 
-A sophisticated honeypot web application designed to mimic a beauty product shopping platform, attracting attackers and collecting threat intelligence.
+HoneyGlow Trap is a deliberately vulnerable e-commerce-style honeypot built for cybersecurity learning, attack simulation, and threat intelligence collection. It presents a beauty-product storefront to attract attacker behavior, logs both application and network activity, and exposes that data through a dashboard and an AI-assisted analysis pipeline.
 
-## 🎯 Purpose
+## Warning
 
-HoneyGlow Trap is a cybersecurity honeypot that:
-- Mimics a real beauty e-commerce platform
-- Contains deliberate vulnerabilities to attract attackers
-- Logs and analyzes attack patterns
-- Provides threat intelligence through a dashboard
-- Generates defense rules for production applications
+This project contains intentional security weaknesses.
 
-## ⚠️ WARNING
+Use it only in:
+- isolated lab environments
+- controlled test networks
+- security research setups
 
-**This application contains intentional security vulnerabilities. DO NOT deploy this in production or expose it to untrusted networks without proper isolation.**
+Do not deploy it to production or expose it to untrusted public infrastructure without proper isolation.
 
-## 🏗️ Architecture
+## What The Project Includes
 
+- A fake beauty storefront built with React
+- An Express backend with intentionally weak validation and vulnerable routes
+- MongoDB for storing users, attack logs, and related data
+- A React dashboard for viewing attack statistics and intelligence
+- Zeek network logging running alongside the reverse proxy
+- Python attacker scripts for generating realistic attack traffic
+- A local Ollama + LlamaIndex threat-intelligence pipeline for normalization, classification, intent inference, MITRE mapping, and report generation
+
+## Runtime Architecture
+
+```text
+Attacker Traffic
+      |
+      v
+    Nginx
+      |
+      +-- Frontend (React / Vite)
+      +-- Backend (Express / MongoDB)
+      +-- Dashboard (React / Vite)
+      |
+      +-- Zeek (shared network namespace for passive logging)
+
+Backend Logs + Mongo Data + Zeek Logs
+      |
+      v
+Threat-Intel Python Pipeline
+      |
+      v
+Ollama + LlamaIndex
+      |
+      v
+Markdown Threat Report
 ```
-┌─────────────┐
-│   Nginx     │ (Reverse Proxy)
-└──────┬──────┘
-       │
-   ┌───┴───┬──────────────┐
-   │       │              │
-┌──▼──┐ ┌──▼──┐      ┌───▼────┐
-│Front│ │Dash │      │Backend │
-│end  │ │board│      │Express │
-└─────┘ └─────┘      └───┬────┘
-                          │
-                     ┌────▼────┐
-                     │ MongoDB │
-                     └─────────┘
+
+## Main Services
+
+Current `docker-compose.yml` starts:
+
+- `mongodb`
+- `backend`
+- `frontend`
+- `dashboard`
+- `nginx`
+- `zeek`
+
+Important: the Ollama-based AI pipeline is currently separate from Docker. The honeypot stack runs in Docker, while Ollama and the `threat-intel` Python script run on the host machine unless you containerize them separately.
+
+## Key Features
+
+### Honeypot Web App
+
+- Mimics a real shopping site to attract malicious traffic
+- Includes login, registration, cart, checkout, reviews, coupons, admin, and profile UI
+- Tracks token-based login state in the frontend
+- Includes searchable and filterable product listing
+
+### Intentional Attack Surface
+
+The project includes endpoints designed to attract and log attacker behavior:
+
+- `POST /api/auth/login`
+- `POST /api/auth/register`
+- `POST /api/cart/add`
+- `POST /api/cart/update`
+- `POST /api/checkout`
+- `GET /api/coupons/apply`
+- `GET /api/users`
+- `GET /api/users/search`
+- `GET /api/admin/users`
+- `GET /api/admin/export`
+- `POST /api/reviews`
+
+These routes are intentionally weak in areas such as:
+
+- brute force and credential stuffing exposure
+- SQLi-style or injection-style payload collection
+- reflected XSS
+- IDOR
+- privilege escalation logging
+- coupon abuse and price tampering
+- LFI-style probing
+
+### Logging And Detection
+
+The application currently collects:
+
+- application request and attack logs in `server/logs/`
+- MongoDB attack records through `AttackLog`
+- Zeek HTTP and connection logs in `zeek/logs/`
+- attacker activity artifacts from `attacker-bot/*.json`
+
+The backend includes middleware for:
+
+- request-level attack logging
+- attack classification metadata
+- payload capture
+- geo-IP enrichment
+
+### Dashboard
+
+The dashboard surfaces:
+
+- live attack feed
+- attack type distribution
+- top attacking IPs
+- geographic distribution
+- coupon abuse signals
+- WAF / defensive rule generation
+
+### Threat Intelligence Pipeline
+
+The `threat-intel/` module adds:
+
+- log normalization across Zeek, app logs, and session-style data
+- LLM-based attack classification
+- session-level intent inference
+- MITRE ATT&CK mapping
+- human-readable report generation
+
+The current implementation uses:
+
+- Ollama for local model serving
+- LlamaIndex for ingestion and retrieval
+- Python for orchestration
+
+## Project Structure
+
+```text
+Honeypot/
+|-- client/          React storefront
+|-- dashboard/       React threat dashboard
+|-- server/          Express API, models, middleware, logs
+|-- nginx/           Reverse proxy configuration
+|-- zeek/            Network log output and Zeek notes
+|-- attacker-bot/    Python scripts to simulate attacks
+|-- threat-intel/    Ollama + LlamaIndex threat analysis pipeline
+|-- docs/            STRIDE, playbooks, metrics
+|-- docker-compose.yml
 ```
 
+## Prerequisites
 
-### Prerequisites
-- Docker & Docker Compose
-- Node.js 18+ (for local development)
-- Python 3.9+ (for attacker bot)
+For the full stack:
 
-### Using Docker Compose (Recommended)
+- Docker Desktop or Docker Engine with Compose support
+- Node.js 18+ for local development outside Docker
+- Python 3.9+ for attacker scripts and threat-intel pipeline
+
+For AI analysis:
+
+- Ollama installed on the host machine
+- A local model such as `llama3.1:8b`
+
+## Quick Start: Full Honeypot
+
+From the repository root:
 
 ```bash
-# Build and start all services
-docker-compose up -d
-
-# View logs
-docker-compose logs -f
-
-# Stop all services
-docker-compose down
+docker compose up -d --build
 ```
 
-## 🧾 Zeek Network Logging (Docker)
+This starts:
 
-This stack includes a Zeek container that passively logs network traffic.
+- MongoDB on `localhost:27017`
+- backend on `localhost:3001`
+- frontend on `localhost:5173`
+- dashboard on `localhost:5174`
+- Nginx on `localhost:80`
+- Zeek attached to Nginx traffic
 
-- **How it works**: the `zeek` service shares the `nginx` container network namespace (`network_mode: "service:nginx"`), so it can observe:
-  - attacker ↔ nginx
-  - nginx ↔ backend/frontend/dashboard
-- **Logs output**: `./zeek/logs/` (e.g. `conn.log`, `http.log`)
-
-### Local Development
+Useful checks:
 
 ```bash
-# Install dependencies
-npm install
-cd server && npm install
-cd ../client && npm install
-cd ../dashboard && npm install
-
-# Start MongoDB (or use Docker)
-docker run -d -p 27017:27017 mongo:7
-
-# Start backend
-cd server && npm run dev
-
-# Start frontend (in new terminal)
-cd client && npm run dev
-
-# Start dashboard (in new terminal)
-cd dashboard && npm run dev
+docker compose ps
+docker compose logs -f backend
+docker compose logs -f zeek
 ```
 
-## 📁 Project Structure
+Health endpoint:
 
-```
-honeyglow-trap/
-├── server/              # Express backend
-│   ├── src/
-│   │   ├── routes/      # API routes with vulnerabilities
-│   │   ├── models/      # MongoDB models
-│   │   ├── middleware/  # Logging & detection middleware
-│   │   ├── detection/   # Attack detection engine
-│   │   └── utils/       # Utilities
-│   └── Dockerfile
-├── client/              # React frontend (fake store)
-│   ├── src/
-│   │   ├── pages/       # Fake store pages
-│   │   ├── components/  # UI components
-│   │   └── App.jsx
-│   └── Dockerfile
-├── dashboard/           # React dashboard (threat intel)
-│   ├── src/
-│   │   ├── components/  # Charts, tables, maps
-│   │   └── App.jsx
-│   └── Dockerfile
-├── attacker-bot/        # Python attack scripts
-│   ├── brute_force.py
-│   ├── coupon_abuse.py
-│   ├── xss_injection.py
-│   └── sqli_attack.py
-├── nginx/               # Nginx configuration
-│   └── nginx.conf
-├── docs/                # Documentation
-│   ├── STRIDE.md
-│   ├── ATTACK_PLAYBOOKS.md
-│   └── METRICS.md
-└── docker-compose.yml
+```bash
+http://localhost:3001/health
 ```
 
-## 🎣 Vulnerable Endpoints
+## Zeek Network Logging
 
-### Authentication
-- `POST /api/auth/login` - SQLi-style injection, credential stuffing
-- `POST /api/auth/register` - Weak validation
+The `zeek` service shares the `nginx` network namespace using:
 
-### Shopping
-- `POST /api/cart/add` - Price tampering
-- `POST /api/cart/update` - Price manipulation
-- `POST /api/checkout` - Business logic abuse
-- `GET /api/coupons/apply?code=XXX` - Coupon abuse
+```text
+network_mode: "service:nginx"
+```
 
-### User Management
-- `GET /api/users?id=123` - Broken access control, IDOR
-- `GET /api/users/search?q=XXX` - Reflected XSS
+That lets Zeek observe:
 
-### Admin
-- `GET /api/admin/users` - Privilege escalation
-- `GET /api/admin/export` - LFI vulnerability
+- attacker -> nginx
+- nginx -> backend
+- nginx -> frontend
+- nginx -> dashboard
 
-### Reviews
-- `POST /api/reviews` - XSS injection point
+Logs are written to:
 
-## 🔍 Attack Detection
+- `zeek/logs/conn.log`
+- `zeek/logs/http.log`
 
-The system detects:
-- SQL Injection attempts
-- XSS (Cross-Site Scripting)
-- LFI (Local File Inclusion)
-- Credential Stuffing
-- Business Logic Abuse (price tampering, coupon abuse)
-- Privilege Escalation
-- IDOR (Insecure Direct Object Reference)
+## Running The Attacker Bot
 
-## 📊 Dashboard Features
-
-- Live attack feed
-- Top attacking IPs
-- Attack type distribution (pie chart)
-- Geographic heatmap
-- Payload explorer
-- Coupon abuse tracker
-- Defense rule generator
-
-## 🤖 Attacker Bot
-
-Run Python scripts to simulate attacks:
+To generate sample malicious traffic:
 
 ```bash
 cd attacker-bot
+pip install -r requirements.txt
 python brute_force.py
-python coupon_abuse.py
-python xss_injection.py
 python sqli_attack.py
+python xss_injection.py
+python coupon_abuse.py
 ```
 
-## 📚 Documentation
+These scripts help populate:
 
-See `docs/` directory for:
-- STRIDE threat model analysis
-- Attack playbooks
-- Metrics and reporting guidelines
+- backend attack logs
+- Zeek network logs
+- session-style JSON artifacts
 
-## 🔒 Security Notice
+## Running The Threat-Intel Pipeline
 
-This is a **honeypot** with intentional vulnerabilities. Use only in:
-- Isolated lab environments
-- Controlled test networks
-- Security research contexts
+Start the honeypot stack first so logs and Mongo data exist.
 
-Never expose to production or public networks without proper isolation.
+Then start Ollama on the host machine:
 
-## 📝 License
+```bash
+ollama serve
+```
 
-MIT License - For educational and research purposes only.
+In another terminal, pull a model if needed:
 
-## AI Threat Intelligence Pipeline
+```bash
+ollama pull llama3.1:8b
+```
 
-A local Ollama + LlamaIndex pipeline is available in `threat-intel/`.
-
-It performs:
-- Log normalization across Zeek, app logs, and session data
-- Attack classification
-- Intent inference
-- MITRE ATT&CK mapping
-- Threat intelligence report generation
-
-Quick start:
+Then run the pipeline:
 
 ```bash
 cd threat-intel
 pip install -r requirements.txt
-python run_pipeline.py
+python run_pipeline.py --model llama3.1:8b --mongo-uri mongodb://localhost:27017 --mongo-db honeyglow --zeek-http-log ../zeek/logs/http.log --app-log ../server/logs/combined.log --session-log ../attacker-bot/brute_force_log.json --output-report ./output/threat_intelligence_report.md
 ```
+
+Generated report:
+
+- `threat-intel/output/threat_intelligence_report.md`
+
+## Local Development
+
+If you want to run parts of the stack outside Docker:
+
+```bash
+npm install
+cd server && npm install
+cd ../client && npm install
+cd ../dashboard && npm install
+```
+
+Start MongoDB separately, then:
+
+```bash
+cd server && npm run dev
+cd client && npm run dev
+cd dashboard && npm run dev
+```
+
+Root-level helper scripts:
+
+- `npm run dev`
+- `npm run server`
+- `npm run client`
+- `npm run build`
+- `npm run docker:build`
+- `npm run docker:up`
+- `npm run docker:down`
+
+## Documentation
+
+Additional project notes live in:
+
+- `docs/STRIDE.md`
+- `docs/ATTACK_PLAYBOOKS.md`
+- `docs/METRICS.md`
+- `SETUP.md`
+- `PROJECT_STRUCTURE.md`
+- `zeek/README.md`
+- `threat-intel/README.md`
+
+## Current Notes
+
+- The AI pipeline is not yet part of `docker-compose.yml`
+- Ollama is expected to run on the host right now
+- The threat-intel script gracefully continues if MongoDB is unavailable
+- Zeek logs depend on traffic actually reaching Nginx
+
+## License
+
+MIT License. Provided for educational and research use.

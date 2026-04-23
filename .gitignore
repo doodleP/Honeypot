@@ -12,3 +12,7 @@ build/
 coverage/
 .nyc_output/
 docker-compose.override.yml
+.venv/
+.venv311/
+threat-intel/.venv/
+threat-intel/.venv311/
