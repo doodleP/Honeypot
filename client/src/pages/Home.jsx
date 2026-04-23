@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
 import './Home.css'
 
 const slides = [
@@ -40,7 +39,6 @@ function Home() {
   const [toast, setToast] = useState(null)
   const [fading, setFading] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState('All')
-  const location = useLocation()
 
   const products = [
     { id: 1, name: 'Glowing Serum', price: 49.99, image: '/images/Serum.jpg', tag: 'Bestseller', category: 'Serum' },
@@ -61,17 +59,11 @@ function Home() {
   ]
 
   const categories = ['All', ...new Set(products.map((product) => product.category))]
-  const searchParam = new URLSearchParams(location.search).get('search') || ''
-  const normalizedSearch = searchParam.trim().toLowerCase()
 
   const filteredProducts = products.filter((product) => {
     const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory
-    const matchesSearch = !normalizedSearch
-      || product.name.toLowerCase().includes(normalizedSearch)
-      || product.tag.toLowerCase().includes(normalizedSearch)
-      || product.category.toLowerCase().includes(normalizedSearch)
 
-    return matchesCategory && matchesSearch
+    return matchesCategory
   })
 
   // Auto advance every 5 seconds

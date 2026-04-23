@@ -1,6 +1,7 @@
 import argparse
 import json
 import os
+import textwrap
 from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
@@ -10,6 +11,8 @@ from llama_index.core import Document, VectorStoreIndex
 from llama_index.core.embeddings.mock_embed_model import MockEmbedding
 from llama_index.llms.ollama import Ollama
 from pymongo import MongoClient
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfgen import canvas
 
 
 ATTACK_TYPES = [
@@ -329,11 +332,10 @@ def map_to_mitre(attack_type: str) -> dict[str, str]:
     return MITRE_MAPPING.get(attack_type, MITRE_MAPPING["Normal Traffic"])
 
 
-def generate_report(
+def build_report_content(
     all_logs: list[dict[str, Any]],
     per_session_analysis: list[dict[str, Any]],
-    output_path: Path,
-) -> None:
+) -> str:
     risk_order = {"LOW": 0, "MEDIUM": 1, "HIGH": 2, "CRITICAL": 3}
     risk_label = "LOW"
 
@@ -392,8 +394,72 @@ def generate_report(
     lines.append("- Tune WAF/IDS signatures from the observed MITRE technique patterns.")
     lines.append("- Use network and app log correlation to prioritize multi-stage attacks.")
 
+    return "\n".join(lines)
+
+
+def write_pdf_report(report_text: str, output_path: Path) -> None:
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    output_path.write_text("\n".join(lines), encoding="utf-8")
+    pdf = canvas.Canvas(str(output_path), pagesize=A4)
+    width, height = A4
+    left_margin = 48
+    top_margin = 48
+    bottom_margin = 48
+    y = height - top_margin
+
+    def new_page() -> None:
+        nonlocal y
+        pdf.showPage()
+        pdf.setFont("Helvetica", 10)
+        y = height - top_margin
+
+    def draw_wrapped_line(text: str, font_name: str = "Helvetica", font_size: int = 10) -> None:
+        nonlocal y
+        wrapped_lines = textwrap.wrap(text, width=105) or [""]
+        for wrapped in wrapped_lines:
+            if y <= bottom_margin:
+                new_page()
+            pdf.setFont(font_name, font_size)
+            pdf.drawString(left_margin, y, wrapped)
+            y -= font_size + 4
+
+    for raw_line in report_text.splitlines():
+        if raw_line.startswith("# "):
+            draw_wrapped_line(raw_line[2:], "Helvetica-Bold", 16)
+            y -= 4
+            continue
+        if raw_line.startswith("## "):
+            draw_wrapped_line(raw_line[3:], "Helvetica-Bold", 13)
+            y -= 2
+            continue
+        if raw_line.startswith("### "):
+            draw_wrapped_line(raw_line[4:], "Helvetica-Bold", 11)
+            continue
+
+        draw_wrapped_line(raw_line)
+        if not raw_line:
+            y -= 2
+
+    pdf.save()
+
+
+def generate_report(
+    all_logs: list[dict[str, Any]],
+    per_session_analysis: list[dict[str, Any]],
+    output_path: Path,
+) -> tuple[Path, Path]:
+    report_text = build_report_content(all_logs, per_session_analysis)
+
+    if output_path.suffix.lower() == ".pdf":
+        pdf_path = output_path
+        markdown_path = output_path.with_suffix(".md")
+    else:
+        markdown_path = output_path
+        pdf_path = output_path.with_suffix(".pdf")
+
+    markdown_path.parent.mkdir(parents=True, exist_ok=True)
+    markdown_path.write_text(report_text, encoding="utf-8")
+    write_pdf_report(report_text, pdf_path)
+    return markdown_path, pdf_path
 
 
 def risk_from_attack_types(attack_types: list[str]) -> str:
@@ -422,7 +488,7 @@ def main() -> None:
     parser.add_argument("--zeek-http-log", default="../zeek/logs/http.log")
     parser.add_argument("--app-log", default="../server/logs/combined.log")
     parser.add_argument("--session-log", default="../attacker-bot/brute_force_log.json")
-    parser.add_argument("--output-report", default="./output/threat_intelligence_report.md")
+    parser.add_argument("--output-report", default="./output/threat_intelligence_report.pdf")
     args = parser.parse_args()
 
     base_dir = Path(__file__).resolve().parent
@@ -450,8 +516,8 @@ def main() -> None:
     normalized_logs.extend(normalize_sessions(attacker_session_records))
 
     if not normalized_logs:
-        generate_report([], [], output_report)
-        print(f"No logs found. Empty report written to: {output_report.resolve()}")
+        markdown_path, pdf_path = generate_report([], [], output_report)
+        print(f"No logs found. Empty reports written to: {markdown_path.resolve()} and {pdf_path.resolve()}")
         return
 
     index = build_index(normalized_logs)
@@ -485,8 +551,8 @@ def main() -> None:
             }
         )
 
-    generate_report(normalized_logs, per_session_analysis, output_report)
-    print(f"Report written to: {output_report.resolve()}")
+    markdown_path, pdf_path = generate_report(normalized_logs, per_session_analysis, output_report)
+    print(f"Reports written to: {markdown_path.resolve()} and {pdf_path.resolve()}")
 
 
 if __name__ == "__main__":

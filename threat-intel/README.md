@@ -20,7 +20,7 @@ This module adds a local AI pipeline for:
              [ Ollama LLM Agent ]
    (classification + intent + MITRE mapping)
                      |
-      [ output/threat_intelligence_report.md ]
+      [ output/threat_intelligence_report.pdf ]
 ```
 
 ## Install
@@ -29,6 +29,14 @@ From this directory:
 
 ```bash
 pip install -r requirements.txt
+```
+
+If an older environment already installed the full `llama-index` bundle, the cleanest reset is:
+
+```bash
+deactivate
+rm -rf .venv311
+py -3.11 -m venv .venv311
 ```
 
 ## Run
@@ -41,7 +49,7 @@ python run_pipeline.py \
   --zeek-http-log ../zeek/logs/http.log \
   --app-log ../server/logs/combined.log \
   --session-log ../attacker-bot/brute_force_log.json \
-  --output-report ./output/threat_intelligence_report.md
+  --output-report ./output/threat_intelligence_report.pdf
 ```
 
 ## Normalized Event Schema
@@ -77,3 +85,4 @@ Each source is normalized into:
 
 - The pipeline gracefully continues if MongoDB is unavailable.
 - Report includes summary, timeline, per-session analysis, techniques, risk, and recommendations.
+- Each run writes both a Markdown report and a PDF report.

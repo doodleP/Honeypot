@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react'
 import './Auth.css'
-import { decodeJwtPayload } from '../utils/authToken'
 
 function Profile() {
   const profile = useMemo(() => {
@@ -11,11 +10,9 @@ function Profile() {
     }
 
     try {
-      const decodedPayload = decodeJwtPayload(token)
-
-      if (!decodedPayload) {
-        return null
-      }
+      const payloadPart = token.split('.')[1]
+      const normalizedPayload = payloadPart.replace(/-/g, '+').replace(/_/g, '/')
+      const decodedPayload = JSON.parse(window.atob(normalizedPayload))
 
       return {
         email: decodedPayload?.email || '',
@@ -57,9 +54,7 @@ function Profile() {
                 />
               </div>
 
-              <button type="button" className="btn-auth" disabled title="Profile updates are not wired yet">
-                Save Settings (Coming Soon)
-              </button>
+              <button type="button" className="btn-auth">Save Settings</button>
             </>
           )}
         </div>

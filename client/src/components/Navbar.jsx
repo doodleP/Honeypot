@@ -1,7 +1,29 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import './Navbar.css'
-import { getAccountDataFromToken } from '../utils/authToken'
+
+const getAccountDataFromToken = () => {
+  const token = localStorage.getItem('token')
+
+  if (!token) {
+    return { isLoggedIn: false, initial: null, email: '' }
+  }
+
+  try {
+    const payloadPart = token.split('.')[1] || ''
+    const normalizedPayload = payloadPart.replace(/-/g, '+').replace(/_/g, '/')
+    const paddingLength = (4 - (normalizedPayload.length % 4)) % 4
+    const paddedPayload = normalizedPayload + '='.repeat(paddingLength)
+    const decodedPayload = JSON.parse(window.atob(paddedPayload))
+    const email = decodedPayload?.email || ''
+    const name = decodedPayload?.name || ''
+    const initial = name?.charAt(0)?.toUpperCase() || email?.charAt(0)?.toUpperCase() || 'U'
+
+    return { isLoggedIn: true, email, name, initial }
+  } catch {
+    return { isLoggedIn: true, initial: 'U', email: '' }
+  }
+}
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -86,6 +108,7 @@ function Navbar() {
           <Link to="/cart">Cart</Link>
           <Link to="/reviews">Reviews</Link>
           <Link to="/coupons">Coupons</Link>
+          <Link to="/admin">Admin</Link>
 
           {/* Search pill */}
           <div className="search-container" ref={searchRef}>
