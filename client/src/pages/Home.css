@@ -233,6 +233,58 @@
   letter-spacing: 1px;
 }
 
+.section-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.category-select-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: #7f6b59;
+}
+
+.category-select {
+  min-width: 145px;
+  border: 1px solid #d8cab8;
+  background: #fff;
+  color: #5c3d2e;
+  border-radius: 2px;
+  padding: 7px 28px 7px 10px;
+  font-family: 'Jost', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  outline: none;
+  cursor: pointer;
+}
+
+.category-select:focus {
+  border-color: #c9a97a;
+  box-shadow: 0 0 0 2px rgba(201, 169, 122, 0.2);
+}
+
+.category-select option {
+  background: #f7f1ea;
+  color: #4a3124;
+}
+
+.category-select option:checked {
+  background: #c9a97a;
+  color: #2c1f14;
+}
+
+.category-select option:hover {
+  background: #e6d5bf;
+  color: #2c1f14;
+}
+
 /* ── PRODUCT GRID ── */
 .products-grid {
   display: grid;
@@ -315,6 +367,13 @@
   color: #2c1f14;
 }
 
+.no-products-message {
+  margin-top: 26px;
+  font-size: 14px;
+  color: #8d7766;
+  text-align: center;
+}
+
 /* ── TOAST NOTIFICATION ── */
 .cart-toast {
   position: fixed;
@@ -389,6 +448,21 @@
   .section-header {
     flex-direction: column;
     gap: 6px;
+    align-items: flex-start;
+  }
+  .section-controls {
+    width: 100%;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .category-select-wrap {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .category-select {
+    min-width: 0;
+    width: 60%;
   }
   .cart-toast {
     top: 80px;

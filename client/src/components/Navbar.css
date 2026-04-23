@@ -28,6 +28,7 @@
   text-decoration: none;
   letter-spacing: 0.5px;
   transition: opacity 0.2s;
+  margin-right: auto;
 }
 
 .logo:hover {
@@ -38,6 +39,246 @@
   display: flex;
   align-items: center;
   gap: 36px;
+  margin-left: auto;
+}
+
+/* ── Search Pill ── */
+.search-container {
+  display: flex;
+  align-items: center;
+}
+
+.search-pill {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 30px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(201, 169, 122, 0.45);
+  background: rgba(201, 169, 122, 0.08);
+  color: rgba(250, 245, 239, 0.65);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              background 0.2s,
+              border-color 0.2s;
+  cursor: default;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.search-pill:hover {
+  border-color: rgba(201, 169, 122, 0.75);
+  background: rgba(201, 169, 122, 0.14);
+  color: #c9a97a;
+}
+
+.search-pill.expanded {
+  border-color: #c9a97a;
+  background: rgba(201, 169, 122, 0.1);
+  color: #c9a97a;
+  width: 220px;
+}
+
+.search-pill-icon {
+  flex-shrink: 0;
+  color: inherit;
+}
+
+.search-pill-trigger {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: inherit;
+  line-height: 1;
+}
+
+.search-pill-form {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  gap: 6px;
+  min-width: 0;
+}
+
+.search-pill-input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.8px;
+  color: rgba(250, 245, 239, 0.9);
+  min-width: 0;
+}
+
+.search-pill-input::placeholder {
+  color: rgba(250, 245, 239, 0.3);
+}
+
+.search-pill-close {
+  background: none;
+  border: none;
+  padding: 2px;
+  cursor: pointer;
+  color: rgba(250, 245, 239, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: color 0.15s;
+}
+
+.search-pill-close:hover {
+  color: #c9a97a;
+}
+
+/* ── Account ── */
+.account-menu {
+  position: relative;
+}
+
+.account-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(250, 245, 239, 0.35);
+  background: rgba(250, 245, 239, 0.12);
+  color: #faf5ef;
+  font-family: 'Jost', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.account-avatar:hover {
+  background: rgba(250, 245, 239, 0.2);
+}
+
+.account-avatar.logged-in {
+  border-color: #c9a97a;
+  background: rgba(201, 169, 122, 0.18);
+  color: #c9a97a;
+}
+
+.account-avatar.logged-in:hover {
+  background: rgba(201, 169, 122, 0.3);
+}
+
+.account-avatar.logged-out {
+  border-color: rgba(250, 245, 239, 0.25);
+  background: rgba(250, 245, 239, 0.07);
+  color: rgba(250, 245, 239, 0.45);
+}
+
+.account-avatar.logged-out:hover {
+  background: rgba(250, 245, 239, 0.15);
+  color: rgba(250, 245, 239, 0.75);
+}
+
+.account-dropdown {
+  position: absolute;
+  right: 0;
+  top: 46px;
+  min-width: 190px;
+  border: 1px solid rgba(201, 169, 122, 0.25);
+  background: #2b2017;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  z-index: 120;
+}
+
+.account-dropdown-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 8px 12px;
+}
+
+.dropdown-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(201, 169, 122, 0.2);
+  border: 1.5px solid #c9a97a;
+  color: #c9a97a;
+  font-family: 'Jost', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.dropdown-user-info {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.dropdown-name {
+  font-family: 'Jost', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(250, 245, 239, 0.9);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dropdown-email {
+  font-family: 'Jost', sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  color: rgba(250, 245, 239, 0.45);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.3px;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: rgba(201, 169, 122, 0.15);
+  margin: 4px 0;
+}
+
+.account-dropdown a,
+.account-dropdown button {
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: rgba(250, 245, 239, 0.85);
+  background: none;
+  border: none;
+  text-decoration: none;
+  text-align: left;
+  padding: 10px 8px;
+  cursor: pointer;
+}
+
+.account-dropdown a:hover,
+.account-dropdown button:hover {
+  color: #c9a97a;
+  background: rgba(201, 169, 122, 0.1);
 }
 
 .nav-links a {
@@ -84,5 +325,14 @@
   .nav-links {
     gap: 20px;
     flex-wrap: wrap;
+  }
+
+  .account-dropdown {
+    right: auto;
+    left: 0;
+  }
+
+  .search-pill.expanded {
+    width: 160px;
   }
 }

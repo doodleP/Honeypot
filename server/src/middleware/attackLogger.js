@@ -2,46 +2,51 @@ const geoip = require('geoip-lite');
 const AttackLog = require('../models/AttackLog');
 const logger = require('../utils/logger');
 
+function parseCookieHeader(cookieHeader) {
+  if (!cookieHeader || typeof cookieHeader !== 'string') return {};
+
+  const out = {};
+  const parts = cookieHeader.split(';');
+  for (const part of parts) {
+    const idx = part.indexOf('=');
+    if (idx === -1) continue;
+    const key = part.slice(0, idx).trim();
+    const val = part.slice(idx + 1).trim();
+    if (!key) continue;
+    try {
+      out[key] = decodeURIComponent(val);
+    } catch {
+      out[key] = val;
+    }
+  }
+  return out;
+}
+
 const attackLogger = async (req, res, next) => {
-  // Capture original response methods
-  const originalSend = res.send;
-  const originalJson = res.json;
-  
-  // Store response data
-  let responseBody = null;
-  
-  // Override res.send
-  res.send = function(body) {
-    responseBody = body;
-    return originalSend.call(this, body);
-  };
-  
-  // Override res.json
-  res.json = function(body) {
-    responseBody = body;
-    return originalJson.call(this, body);
-  };
-  
   // Log after response is sent
   res.on('finish', async () => {
     try {
-      const ip = req.ip || req.connection.remoteAddress || req.headers['x-forwarded-for']?.split(',')[0] || 'unknown';
+      const forwarded = req.headers['x-forwarded-for'];
+      const ip = (typeof forwarded === 'string' && forwarded.split(',')[0].trim())
+        || req.ip
+        || req.connection?.remoteAddress
+        || 'unknown';
+
       const geo = geoip.lookup(ip);
       const classification = req.attackClassification || null;
+
+      const cookieHeader = req.headers?.cookie;
+      const cookies = parseCookieHeader(cookieHeader);
       
       const logData = {
         ip,
-        userAgent: req.headers['user-agent'],
         method: req.method,
         endpoint: req.path,
+        routeParams: req.params,
         attackType: classification?.type || 'UNKNOWN',
-        headers: Object.fromEntries(
-          Object.entries(req.headers).filter(([key]) => 
-            !key.toLowerCase().includes('authorization') && 
-            !key.toLowerCase().includes('cookie')
-          )
-        ),
+        cookies,
         requestBody: req.body,
+        requestBodyRaw: typeof req.rawBody === 'string' ? req.rawBody : undefined,
         queryParams: req.query,
         payload: classification?.payload,
         severity: classification?.severity,

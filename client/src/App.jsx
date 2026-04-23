@@ -8,6 +8,7 @@ import Checkout from './pages/Checkout'
 import Reviews from './pages/Reviews'
 import Coupons from './pages/Coupons'
 import Admin from './pages/Admin'
+import Profile from './pages/Profile'
 import './App.css'
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/reviews" element={<Reviews />} />
           <Route path="/coupons" element={<Coupons />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/admin/export" element={<Admin />} />
         </Routes>

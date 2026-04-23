@@ -152,6 +152,21 @@
   color: #2c1f14;
 }
 
+.auth-link .auth-toggle-btn {
+  border: none;
+  background: none;
+  color: #c9a97a;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.auth-link .auth-toggle-btn:hover {
+  color: #2c1f14;
+}
+
 @media (max-width: 480px) {
   .auth-card {
     padding: 36px 24px;

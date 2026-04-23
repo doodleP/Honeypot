@@ -38,14 +38,33 @@ function Home() {
   const [current, setCurrent] = useState(0)
   const [toast, setToast] = useState(null)
   const [fading, setFading] = useState(false)
+  const [selectedCategory, setSelectedCategory] = useState('All')
 
   const products = [
-    { id: 1, name: 'Glowing Serum', price: 49.99, image: '/images/Serum.jpg', tag: 'Bestseller' },
-    { id: 2, name: 'Hydrating Mask', price: 29.99, image: '/images/Mask.jpg', tag: 'Skin Care' },
-    { id: 3, name: 'Luxury Lipstick', price: 24.99, image: '/images/lipsticks.jpg', tag: 'Colour' },
-    { id: 4, name: 'Mascara UpSwing', price: 19.99, image: '/images/Mascara.jpg', tag: 'Eyes' },
-    { id: 5, name: 'Anti-Aging Cream', price: 79.99, image: '/images/Anti Cream.jpg', tag: 'Premium' },
+    { id: 1, name: 'Glowing Serum', price: 49.99, image: '/images/Serum.jpg', tag: 'Bestseller', category: 'Serum' },
+    { id: 2, name: 'Hydrating Mask', price: 29.99, image: '/images/Mask.jpg', tag: 'Skin Care', category: 'Mask' },
+    { id: 3, name: 'Luxury Lipstick', price: 24.99, image: '/images/lipsticks.jpg', tag: 'Colour', category: 'Lipstick' },
+    { id: 4, name: 'Mascara UpSwing', price: 19.99, image: '/images/Mascara.jpg', tag: 'Eyes', category: 'Mascara' },
+    { id: 5, name: 'Anti-Aging Cream', price: 79.99, image: '/images/Anti Cream.jpg', tag: 'Premium', category: 'Cream' },
+    { id: 6, name: 'Radiance Boost Serum', price: 44.99, image: '/images/RBSerum.jpg', tag: 'Daily Glow', category: 'Serum' },
+    { id: 8, name: 'Dew Drop Night Mask', price: 34.99, image: '/images/NightMask.jpg', tag: 'Overnight Care', category: 'Mask' },
+    { id: 10, name: 'Velvet Rose Lipstick', price: 21.99, image: '/images/VelvetLips.jpg', tag: 'Matte Finish', category: 'Lipstick' },
+    { id: 12, name: 'Lash Lift Mascara', price: 18.49, image: '/images/LashLift.jpg', tag: 'Volume Boost', category: 'Mascara' },
+    { id: 14, name: 'Moisture Restore Cream', price: 69.99, image: '/images/MoistureRestor.jpg', tag: 'Firming Care', category: 'Cream' },
+    { id: 7, name: 'Vitamin C Dark Circle Serum', price: 54.99, image: '/images/DarkCircle.jpg', tag: 'Brightening', category: 'Serum' },
+    { id: 9, name: 'Aqua Comfort Mask', price: 27.99, image: '/images/ComfortMask.jpg', tag: 'Moisture Lock', category: 'Mask' },
+    { id: 11, name: 'Satin Nude Lipstick', price: 26.99, image: '/images/SatinNudeLips.jpg', tag: 'Creamy Wear', category: 'Lipstick' },
+    { id: 13, name: 'Midnight Curl Mascara', price: 22.99, image: '/images/MidnightCurl.jpg', tag: 'Long Wear', category: 'Mascara' },
+    { id: 15, name: 'Sleep Repair Night Cream', price: 84.99, image: '/images/SleepRepair.jpg', tag: 'Luxury Care', category: 'Cream' },
   ]
+
+  const categories = ['All', ...new Set(products.map((product) => product.category))]
+
+  const filteredProducts = products.filter((product) => {
+    const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory
+
+    return matchesCategory
+  })
 
   // Auto advance every 5 seconds
   useEffect(() => {
@@ -126,11 +145,26 @@ function Home() {
         <div className="container">
           <div className="section-header">
             <h2 className="section-title">Our Products</h2>
-            <span className="section-subtitle">{products.length} items</span>
+            <div className="section-controls">
+              <span className="section-subtitle">{filteredProducts.length} items</span>
+              <label className="category-select-wrap" htmlFor="category-filter">
+                Categories
+                <select
+                  id="category-filter"
+                  className="category-select"
+                  value={selectedCategory}
+                  onChange={(event) => setSelectedCategory(event.target.value)}
+                >
+                  {categories.map((category) => (
+                    <option key={category} value={category}>{category}</option>
+                  ))}
+                </select>
+              </label>
+            </div>
           </div>
 
           <div className="products-grid">
-            {products.map(product => (
+            {filteredProducts.map(product => (
               <div key={product.id} className="product-card">
                 <div className="product-image-wrap">
                   <img src={product.image} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -146,6 +180,10 @@ function Home() {
               </div>
             ))}
           </div>
+
+          {filteredProducts.length === 0 && (
+            <p className="no-products-message">No products found for this category.</p>
+          )}
         </div>
       </div>
 

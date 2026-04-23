@@ -4,9 +4,11 @@ import api from '../utils/api'
 import './Auth.css'
 
 function Login() {
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [isCreatingAccount, setIsCreatingAccount] = useState(false)
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
@@ -14,22 +16,51 @@ function Login() {
     setError('')
     
     try {
-      // VULNERABILITY: SQLi-style payloads can be sent here
-      const response = await api.post('/api/auth/login', { email, password })
+      // Intentionally weak client-side validation for honeypot attack simulation.
+      const endpoint = isCreatingAccount ? '/api/auth/register' : '/api/auth/login'
+      const payload = isCreatingAccount
+        ? { email, password, name }
+        : { email, password }
+
+      const response = await api.post(endpoint, payload)
       localStorage.setItem('token', response.data.token)
+      window.dispatchEvent(new Event('auth-changed'))
       navigate('/')
     } catch (err) {
-      setError(err.response?.data?.error || 'Login failed')
+      const message = err.response?.data?.error
+
+      if (isCreatingAccount && message === 'User already exists') {
+        setError('Account already exists. Switch to login and continue.')
+        return
+      }
+
+      setError(message || (isCreatingAccount ? 'Registration failed' : 'Login failed'))
     }
+  }
+
+  const toggleMode = () => {
+    setError('')
+    setIsCreatingAccount((prev) => !prev)
   }
 
   return (
     <div className="auth-page">
       <div className="container">
         <div className="auth-card">
-          <h2>Login to HoneyGlow</h2>
-          {error && <div className="error">{error}</div>}
+          <h2>{isCreatingAccount ? 'Create Account' : 'Login to HoneyGlow'}</h2>
+          {error && <div className="auth-error">{error}</div>}
           <form onSubmit={handleSubmit}>
+            {isCreatingAccount && (
+              <div className="form-group">
+                <label>Name</label>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Your name"
+                />
+              </div>
+            )}
             <div className="form-group">
               <label>Email</label>
               <input
@@ -50,10 +81,19 @@ function Login() {
                 required
               />
             </div>
-            <button type="submit" className="btn btn-primary">Login</button>
+            <button type="submit" className="btn-auth">
+              {isCreatingAccount ? 'Create Account & Login' : 'Login'}
+            </button>
           </form>
           <p className="auth-link">
-            Don't have an account? <a href="/register">Register here</a>
+            {isCreatingAccount ? 'Already have an account?' : "Don't have an account?"}{' '}
+            <button
+              type="button"
+              onClick={toggleMode}
+              className="auth-toggle-btn"
+            >
+              {isCreatingAccount ? 'Login here' : 'Create one here'}
+            </button>
           </p>
         </div>
       </div>
