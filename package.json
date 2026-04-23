@@ -13,10 +13,17 @@
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down"
   },
-  "keywords": ["honeypot", "cybersecurity", "threat-intelligence"],
+  "keywords": [
+    "honeypot",
+    "cybersecurity",
+    "threat-intelligence"
+  ],
   "author": "",
   "license": "MIT",
   "devDependencies": {
     "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "axios": "^1.15.2"
   }
 }

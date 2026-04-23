@@ -6,6 +6,7 @@ Run all attack simulations
 import subprocess
 import sys
 import time
+from pathlib import Path
 
 ATTACKS = [
     ("brute_force.py", "Brute Force Login"),
@@ -23,9 +24,10 @@ def run_attack(script_name, description):
     print(f"{'='*60}\n")
     
     try:
+        script_dir = Path(__file__).resolve().parent
         result = subprocess.run(
-            [sys.executable, script_name],
-            cwd="attacker-bot",
+            [sys.executable, str(script_dir / script_name)],
+            cwd=str(script_dir),
             capture_output=False,
             text=True
         )

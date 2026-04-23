@@ -15,6 +15,7 @@ const userRoutes = require('./routes/users');
 const adminRoutes = require('./routes/admin');
 const reviewRoutes = require('./routes/reviews');
 const dashboardRoutes = require('./routes/dashboard');
+const reportRoutes = require('./routes/reports');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -53,6 +54,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/reports', reportRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

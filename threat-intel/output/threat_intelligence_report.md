@@ -1,0 +1,287 @@
+# Threat Intelligence Report
+
+## Summary
+- Total normalized events: 6716
+- Sessions analyzed: 5
+- Overall risk level: HIGH
+- Attack type distribution:
+  - Normal Traffic: 46
+  - Brute Force: 17
+
+## Attack Timeline
+- 1776966290.523695 | fe80::c0ef:76ff:fe14:246f | GET  | zeek_http
+- 1776971413.188888 | 172.19.0.1 | GET  | zeek_http
+- 1776971791.806286 | 172.19.0.1 | GET  | zeek_http
+- 2026-02-27 05:46:47 |  | UNKNOWN  | app_log
+- 2026-02-27 05:46:47 |  | UNKNOWN  | app_log
+- 2026-02-27 05:48:09 |  | UNKNOWN  | app_log
+- 2026-02-27 05:48:09 |  | UNKNOWN  | app_log
+- 2026-02-27 05:49:12 |  | UNKNOWN  | app_log
+- 2026-02-27 05:49:18 |  | UNKNOWN  | app_log
+- 2026-02-27 05:49:18 |  | UNKNOWN  | app_log
+- 2026-02-27 05:49:18 |  | UNKNOWN  | app_log
+- 2026-02-27 05:49:18 |  | UNKNOWN  | app_log
+- 2026-02-27 05:49:18 |  | UNKNOWN  | app_log
+- 2026-02-27 05:49:18 |  | UNKNOWN  | app_log
+- 2026-02-27 05:49:23 |  | UNKNOWN  | app_log
+- 2026-02-27 05:49:28 |  | UNKNOWN  | app_log
+- 2026-02-27 05:49:33 |  | UNKNOWN  | app_log
+- 2026-02-27 05:49:38 |  | UNKNOWN  | app_log
+- 2026-02-27 05:49:44 |  | UNKNOWN  | app_log
+- 2026-02-27 05:49:49 |  | UNKNOWN  | app_log
+- 2026-02-27 05:49:49 |  | UNKNOWN  | app_log
+- 2026-02-27 05:49:49 |  | UNKNOWN  | app_log
+- 2026-02-27 05:49:53 |  | UNKNOWN  | app_log
+- 2026-02-27 05:49:58 |  | UNKNOWN  | app_log
+- 2026-02-27 05:50:03 |  | UNKNOWN  | app_log
+- 2026-02-27 05:50:09 |  | UNKNOWN  | app_log
+- 2026-02-27 05:50:14 |  | UNKNOWN  | app_log
+- 2026-02-27 05:50:19 |  | UNKNOWN  | app_log
+- 2026-02-27 05:50:19 |  | UNKNOWN  | app_log
+- 2026-02-27 05:50:19 |  | UNKNOWN  | app_log
+- 2026-02-27 05:50:23 |  | UNKNOWN  | app_log
+- 2026-02-27 05:50:28 |  | UNKNOWN  | app_log
+- 2026-02-27 05:50:33 |  | UNKNOWN  | app_log
+- 2026-02-27 05:50:39 |  | UNKNOWN  | app_log
+- 2026-02-27 05:50:45 |  | UNKNOWN  | app_log
+- 2026-02-27 05:50:49 |  | UNKNOWN  | app_log
+- 2026-02-27 05:50:49 |  | UNKNOWN  | app_log
+- 2026-02-27 05:50:49 |  | UNKNOWN  | app_log
+- 2026-02-27 06:17:16 |  | UNKNOWN  | app_log
+- 2026-02-27 06:17:16 |  | UNKNOWN  | app_log
+- 2026-02-27 07:11:34 |  | UNKNOWN  | app_log
+- 2026-02-27 07:11:34 |  | UNKNOWN  | app_log
+- 2026-02-27 07:12:59 |  | UNKNOWN  | app_log
+- 2026-02-27 07:12:59 |  | UNKNOWN  | app_log
+- 2026-02-27 07:13:50 |  | UNKNOWN  | app_log
+- 2026-02-27 07:13:50 |  | UNKNOWN  | app_log
+- 2026-02-27 07:13:50 |  | UNKNOWN  | app_log
+- 2026-02-27 07:13:50 |  | UNKNOWN  | app_log
+- 2026-02-27 07:13:50 |  | UNKNOWN  | app_log
+- 2026-02-27 07:13:50 |  | UNKNOWN  | app_log
+- 2026-02-27 07:13:55 |  | UNKNOWN  | app_log
+- 2026-02-27 07:14:01 |  | UNKNOWN  | app_log
+- 2026-02-27 07:14:06 |  | UNKNOWN  | app_log
+- 2026-02-27 07:14:11 |  | UNKNOWN  | app_log
+- 2026-02-27 07:14:16 |  | UNKNOWN  | app_log
+- 2026-02-27 07:14:20 |  | UNKNOWN  | app_log
+- 2026-02-27 07:14:20 |  | UNKNOWN  | app_log
+- 2026-02-27 07:14:20 |  | UNKNOWN  | app_log
+- 2026-02-27 07:14:25 |  | UNKNOWN  | app_log
+- 2026-02-27 07:14:31 |  | UNKNOWN  | app_log
+- 2026-02-27 07:14:36 |  | UNKNOWN  | app_log
+- 2026-02-27 07:14:41 |  | UNKNOWN  | app_log
+- 2026-02-27 07:14:46 |  | UNKNOWN  | app_log
+- 2026-02-27 07:14:50 |  | UNKNOWN  | app_log
+- 2026-02-27 07:14:50 |  | UNKNOWN  | app_log
+- 2026-02-27 07:14:50 |  | UNKNOWN  | app_log
+- 2026-02-27 07:14:56 |  | UNKNOWN  | app_log
+- 2026-02-27 07:15:01 |  | UNKNOWN  | app_log
+- 2026-02-27 07:15:06 |  | UNKNOWN  | app_log
+- 2026-02-27 07:15:11 |  | UNKNOWN  | app_log
+- 2026-02-27 07:15:20 |  | UNKNOWN  | app_log
+- 2026-02-27 07:15:20 |  | UNKNOWN  | app_log
+- 2026-02-27 07:15:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:15:50 |  | UNKNOWN  | app_log
+- 2026-02-27 07:15:50 |  | UNKNOWN  | app_log
+- 2026-02-27 07:16:20 |  | UNKNOWN  | app_log
+- 2026-02-27 07:16:20 |  | UNKNOWN  | app_log
+- 2026-02-27 07:16:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:16:50 |  | UNKNOWN  | app_log
+- 2026-02-27 07:16:50 |  | UNKNOWN  | app_log
+- 2026-02-27 07:17:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:17:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:17:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:18:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:18:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:18:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:19:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:19:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:19:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:19:47 |  | UNKNOWN  | app_log
+- 2026-02-27 07:19:50 |  | UNKNOWN  | app_log
+- 2026-02-27 07:19:50 |  | UNKNOWN  | app_log
+- 2026-02-27 07:19:50 |  | UNKNOWN  | app_log
+- 2026-02-27 07:19:53 |  | UNKNOWN  | app_log
+- 2026-02-27 07:19:55 |  | UNKNOWN  | app_log
+- 2026-02-27 07:20:00 |  | UNKNOWN  | app_log
+- 2026-02-27 07:20:06 |  | UNKNOWN  | app_log
+- 2026-02-27 07:20:10 |  | UNKNOWN  | app_log
+- 2026-02-27 07:20:15 |  | UNKNOWN  | app_log
+- 2026-02-27 07:20:21 |  | UNKNOWN  | app_log
+- 2026-02-27 07:20:21 |  | UNKNOWN  | app_log
+- 2026-02-27 07:20:21 |  | UNKNOWN  | app_log
+- 2026-02-27 07:20:23 |  | UNKNOWN  | app_log
+- 2026-02-27 07:20:23 |  | UNKNOWN  | app_log
+- 2026-02-27 07:20:23 |  | UNKNOWN  | app_log
+- 2026-02-27 07:20:26 |  | UNKNOWN  | app_log
+- 2026-02-27 07:20:31 |  | UNKNOWN  | app_log
+- 2026-02-27 07:20:36 |  | UNKNOWN  | app_log
+- 2026-02-27 07:20:42 |  | UNKNOWN  | app_log
+- 2026-02-27 07:20:44 |  | UNKNOWN  | app_log
+- 2026-02-27 07:20:44 |  | UNKNOWN  | app_log
+- 2026-02-27 07:20:45 |  | UNKNOWN  | app_log
+- 2026-02-27 07:20:51 |  | UNKNOWN  | app_log
+- 2026-02-27 07:20:51 |  | UNKNOWN  | app_log
+- 2026-02-27 07:20:51 |  | UNKNOWN  | app_log
+- 2026-02-27 07:20:56 |  | UNKNOWN  | app_log
+- 2026-02-27 07:21:01 |  | UNKNOWN  | app_log
+- 2026-02-27 07:21:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:21:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:21:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:22:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:22:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:22:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:23:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:23:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:23:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:24:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:24:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:24:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:25:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:25:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:25:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:26:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:26:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:26:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:27:06 |  | UNKNOWN  | app_log
+- 2026-02-27 07:27:06 |  | UNKNOWN  | app_log
+- 2026-02-27 07:27:06 |  | UNKNOWN  | app_log
+- 2026-02-27 07:27:06 |  | UNKNOWN  | app_log
+- 2026-02-27 07:27:06 |  | UNKNOWN  | app_log
+- 2026-02-27 07:27:06 |  | UNKNOWN  | app_log
+- 2026-02-27 07:27:12 |  | UNKNOWN  | app_log
+- 2026-02-27 07:27:17 |  | UNKNOWN  | app_log
+- 2026-02-27 07:27:25 |  | UNKNOWN  | app_log
+- 2026-02-27 07:27:28 |  | UNKNOWN  | app_log
+- 2026-02-27 07:27:32 |  | UNKNOWN  | app_log
+- 2026-02-27 07:27:37 |  | UNKNOWN  | app_log
+- 2026-02-27 07:27:38 |  | UNKNOWN  | app_log
+- 2026-02-27 07:27:38 |  | UNKNOWN  | app_log
+- 2026-02-27 07:27:43 |  | UNKNOWN  | app_log
+- 2026-02-27 07:27:48 |  | UNKNOWN  | app_log
+- 2026-02-27 07:27:53 |  | UNKNOWN  | app_log
+- 2026-02-27 07:27:58 |  | UNKNOWN  | app_log
+- 2026-02-27 07:28:02 |  | UNKNOWN  | app_log
+- 2026-02-27 07:28:07 |  | UNKNOWN  | app_log
+- 2026-02-27 07:28:08 |  | UNKNOWN  | app_log
+- 2026-02-27 07:28:29 |  | UNKNOWN  | app_log
+- 2026-02-27 07:28:37 |  | UNKNOWN  | app_log
+- 2026-02-27 07:28:38 |  | UNKNOWN  | app_log
+- 2026-02-27 07:29:07 |  | UNKNOWN  | app_log
+- 2026-02-27 07:29:08 |  | UNKNOWN  | app_log
+- 2026-02-27 07:29:29 |  | UNKNOWN  | app_log
+- 2026-02-27 07:29:37 |  | UNKNOWN  | app_log
+- 2026-02-27 07:29:38 |  | UNKNOWN  | app_log
+- 2026-02-27 07:30:07 |  | UNKNOWN  | app_log
+- 2026-02-27 07:30:08 |  | UNKNOWN  | app_log
+- 2026-02-27 07:30:29 |  | UNKNOWN  | app_log
+- 2026-02-27 07:31:32 |  | UNKNOWN  | app_log
+- 2026-02-27 07:31:32 |  | UNKNOWN  | app_log
+- 2026-02-27 07:31:32 |  | UNKNOWN  | app_log
+- 2026-02-27 07:32:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:32:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:32:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:33:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:33:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:33:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:34:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:34:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:34:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:35:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:35:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:35:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:36:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:36:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:36:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:37:31 |  | UNKNOWN  | app_log
+- 2026-02-27 07:37:32 |  | UNKNOWN  | app_log
+- 2026-02-27 07:37:32 |  | UNKNOWN  | app_log
+- 2026-02-27 07:38:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:38:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:38:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:39:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:39:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:39:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:40:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:40:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:40:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:41:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:41:30 |  | UNKNOWN  | app_log
+- 2026-02-27 07:41:30 |  | UNKNOWN  | app_log
+
+## Session Analysis
+### Session fe80::c0ef:76ff:fe14:246f:143
+- Risk: LOW
+- Inferred goal: unknown
+- Skill level: unknown
+- Actor type: human
+- Techniques used:
+  - N/A - No Malicious Technique (N/A)
+- Key observations:
+  - 1776966290.523695 Normal Traffic (0.50): No strong malicious indicators detected.
+
+### Session 172.19.0.1:56214
+- Risk: LOW
+- Inferred goal: unknown
+- Skill level: unknown
+- Actor type: human
+- Techniques used:
+  - N/A - No Malicious Technique (N/A)
+- Key observations:
+  - 1776971413.188888 Normal Traffic (0.50): No strong malicious indicators detected.
+
+### Session 172.19.0.1:53120
+- Risk: LOW
+- Inferred goal: unknown
+- Skill level: unknown
+- Actor type: human
+- Techniques used:
+  - N/A - No Malicious Technique (N/A)
+- Key observations:
+  - 1776971791.806286 Normal Traffic (0.50): No strong malicious indicators detected.
+
+### Session unknown
+- Risk: LOW
+- Inferred goal: unknown
+- Skill level: unknown
+- Actor type: human
+- Techniques used:
+  - N/A - No Malicious Technique (N/A)
+- Key observations:
+  - 2026-02-27 05:46:47 Normal Traffic (0.50): No strong malicious indicators detected.
+  - 2026-02-27 05:46:47 Normal Traffic (0.50): No strong malicious indicators detected.
+  - 2026-02-27 05:48:09 Normal Traffic (0.50): No strong malicious indicators detected.
+  - 2026-02-27 05:48:09 Normal Traffic (0.50): No strong malicious indicators detected.
+  - 2026-02-27 05:49:12 Normal Traffic (0.50): No strong malicious indicators detected.
+  - 2026-02-27 05:49:18 Normal Traffic (0.50): No strong malicious indicators detected.
+  - 2026-02-27 05:49:18 Normal Traffic (0.50): No strong malicious indicators detected.
+  - 2026-02-27 05:49:18 Normal Traffic (0.50): No strong malicious indicators detected.
+  - 2026-02-27 05:49:18 Normal Traffic (0.50): No strong malicious indicators detected.
+  - 2026-02-27 05:49:18 Normal Traffic (0.50): No strong malicious indicators detected.
+
+### Session ::ffff:172.19.0.1
+- Risk: HIGH
+- Inferred goal: credential access
+- Skill level: low
+- Actor type: human
+- Techniques used:
+  - N/A - No Malicious Technique (N/A)
+  - T1110 - Brute Force (Credential Access)
+- Key observations:
+  - 2026-03-05T12:31:28.913000 Normal Traffic (0.50): No strong malicious indicators detected.
+  - 2026-03-05T12:32:13.704000 Normal Traffic (0.50): No strong malicious indicators detected.
+  - 2026-03-05T12:33:58.841000 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-03-05T12:33:59.210000 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-03-05T12:34:40.834000 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-03-05T12:34:41.146000 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-03-05T12:34:41.469000 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-03-05T12:34:41.777000 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-03-05T12:34:42.090000 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-03-05T12:34:42.421000 Brute Force (0.60): Detected repeated authentication-related activity.
+
+## Recommendations
+- Add strict input validation and output encoding for user-controlled fields.
+- Enforce authentication hardening: rate-limits, lockouts, and MFA for high-risk routes.
+- Tune WAF/IDS signatures from the observed MITRE technique patterns.
+- Use network and app log correlation to prioritize multi-stage attacks.

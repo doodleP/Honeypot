@@ -6,6 +6,7 @@ import TopIPs from './TopIPs'
 import GeoMap from './GeoMap'
 import CouponAbuse from './CouponAbuse'
 import WAFRules from './WAFRules'
+import ReportGenerator from './ReportGenerator'
 import './Dashboard.css'
 
 function Dashboard() {
@@ -50,6 +51,7 @@ function Dashboard() {
             <p>Real-time attack monitoring and analysis</p>
           </div>
           <div className="dashboard-header-right">
+            <ReportGenerator />
             <div className="live-indicator">
               <span className="live-dot" />
               Live — updates every 30s

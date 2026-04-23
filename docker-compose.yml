@@ -28,8 +28,11 @@ services:
       MONGODB_URI: mongodb://admin:honeypot123@mongodb:27017/honeyglow?authSource=admin
       JWT_SECRET: super-secret-honeypot-jwt-key-change-in-production
       GEOIP_API_KEY: ${GEOIP_API_KEY:-}
+      OLLAMA_BASE_URL: http://ollama:11434
+      OLLAMA_MODEL: llama3.1:8b
     depends_on:
       - mongodb
+      - ollama
     volumes:
       - ./server:/app
       - /app/node_modules
@@ -131,9 +134,67 @@ services:
         "zeek -C -i eth0 local",
       ]
 
+  ollama:
+    image: ollama/ollama:latest
+    container_name: honeyglow-ollama
+    restart: unless-stopped
+    runtime: nvidia
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    environment:
+      NVIDIA_VISIBLE_DEVICES: all
+      OLLAMA_NUM_THREAD: 8
+      OLLAMA_FLASH_ATTENTION: 1
+      OLLAMA_GPU_MEMORY_FRACTION: 0.9
+      OLLAMA_NUM_GPU: 1
+      OLLAMA_GPU_LAYERS: 43
+      OLLAMA_KEEP_ALIVE: 10m
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    command:
+      - serve
+    networks:
+      - honeyglow-network
+
+  threat-intel:
+    build:
+      context: ./threat-intel
+      dockerfile: Dockerfile
+    container_name: honeyglow-threat-intel
+    restart: "no"
+    environment:
+      MONGODB_URI: mongodb://admin:honeypot123@mongodb:27017/honeyglow?authSource=admin
+      MONGODB_DB: honeyglow
+      OLLAMA_BASE_URL: http://ollama:11434
+      OLLAMA_MODEL: llama3.1:8b
+    depends_on:
+      - mongodb
+      - backend
+      - zeek
+      - ollama
+    working_dir: /app/threat-intel
+    volumes:
+      - ./:/app
+    command:
+      [
+        "sh",
+        "-c",
+        "until [ -s /app/zeek/logs/conn.log ] && [ -s /app/server/logs/combined.log ] && [ -s /app/attacker-bot/brute_force_log.json ]; do echo 'Waiting for logs...'; sleep 5; done; python run_pipeline.py --model \"$$OLLAMA_MODEL\" --ollama-base-url \"$$OLLAMA_BASE_URL\" --mongo-uri \"$$MONGODB_URI\" --mongo-db \"$$MONGODB_DB\" --zeek-http-log ../zeek/logs/conn.log --app-log ../server/logs/combined.log --session-log ../attacker-bot/brute_force_log.json --output-report ./output/threat_intelligence_report.md",
+      ]
+    networks:
+      - honeyglow-network
+
 volumes:
   mongodb_data:
   mongodb_config:
+  ollama_data:
 
 networks:
   honeyglow-network:
