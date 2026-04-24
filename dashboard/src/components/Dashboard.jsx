@@ -3,7 +3,6 @@ import api from '../utils/api'
 import AttackFeed from './AttackFeed'
 import AttackStats from './AttackStats'
 import TopIPs from './TopIPs'
-import GeoMap from './GeoMap'
 import CouponAbuse from './CouponAbuse'
 import WAFRules from './WAFRules'
 import ReportGenerator from './ReportGenerator'
@@ -75,7 +74,6 @@ function Dashboard() {
           </div>
 
           <div className="dashboard-sidebar">
-            <GeoMap stats={stats} />
             <WAFRules />
           </div>
         </div>

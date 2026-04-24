@@ -67,7 +67,7 @@ This stack includes a Zeek container that passively logs network traffic.
 ```bash
 # Install dependencies
 npm install
-cd server && npm install
+cd .
 cd ../client && npm install
 cd ../dashboard && npm install
 

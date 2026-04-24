@@ -8,6 +8,7 @@ import requests
 import time
 
 BASE_URL = "http://localhost:3001"
+FRONTEND_URL = "http://localhost:5173"
 
 # XSS payloads to test
 XSS_PAYLOADS = [
@@ -112,8 +113,38 @@ def test_product_id_xss():
         except Exception as e:
             print(f"   Error: {e}")
 
+def test_frontend_search_xss():
+    """Test Reflected XSS in Frontend Search Bar"""
+    print("\n🌐 Testing Frontend Search XSS (Client-Side)...")
+    print(f"Target: {FRONTEND_URL}/?search=PAYLOAD\n")
+    
+    for i, payload in enumerate(XSS_PAYLOADS[:5], 1):
+        try:
+            # Request the frontend with XSS payload in search parameter
+            response = requests.get(
+                f"{FRONTEND_URL}/",
+                params={"search": payload},
+                timeout=5
+            )
+            
+            print(f"Payload {i}: {payload[:50]}...")
+            print(f"   Status: {response.status_code}")
+            
+            # Check if payload is reflected in HTML (without escaping)
+            # dangerouslySetInnerHTML will render it directly
+            if payload in response.text or "Search Results for:" in response.text:
+                print(f"   ⚠️  XSS PAYLOAD REFLECTED IN FRONTEND!")
+                if payload in response.text:
+                    print(f"   🎯 VULNERABLE: Unescaped payload found in response")
+            
+            time.sleep(0.3)
+            
+        except Exception as e:
+            print(f"   Error: {e}")
+
 if __name__ == "__main__":
     test_review_xss()
     test_search_xss()
     test_product_id_xss()
+    test_frontend_search_xss()
     print("\n✅ XSS injection tests completed")
