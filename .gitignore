@@ -19,3 +19,17 @@ threat-intel/.venv311/
 threat-intel/output/threat_intelligence_report.md
 threat-intel/output/threat_intelligence_report.pdf
 server/logs/combined.log
+
+# Log files from attacker simulations
+attacker-bot/brute_force_log.json
+attacker-bot/brute_force_log.jsonl
+attacker-bot/coupon_abuse_log.json
+attacker-bot/coupon_abuse_log.jsonl
+attacker-bot/sqli_attack_log.json
+coupon_abuse_log.json
+coupon_abuse_log.jsonl
+
+# Generated reports and outputs
+reports/
+zeek/logs/
+server/logs/
