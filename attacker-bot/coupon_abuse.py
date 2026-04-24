@@ -162,4 +162,4 @@ if __name__ == "__main__":
     
     # Save comprehensive attack log
     attacker.log_attack("coupon_summary", len(valid_coupons) > 0, {"valid_coupons": len(valid_coupons)})
-    attacker.save_attack_log("coupon_abuse_log.json")
+    attacker.save_attack_log("coupon_abuse_log.jsonl")

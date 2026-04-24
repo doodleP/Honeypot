@@ -1,16 +1,15 @@
 # Threat Intelligence Report
 
 ## Summary
-- Total normalized events: 4094
-- Sessions analyzed: 4
+- Total normalized events: 4298
+- Sessions analyzed: 3
 - Overall risk level: CRITICAL
 - Attack type distribution:
-  - Normal Traffic: 32
-  - Brute Force: 30
-  - SQL Injection: 1
+  - Brute Force: 56
+  - SQL Injection: 5
 
 ## Attack Timeline
-- 1776970945.498429 | 172.19.0.1 | GET  | zeek_http
+- 1777044599.836089 | fe80::1078:ebff:fe42:2d77 | GET  | zeek_http
 - 2026-02-27 05:46:47 |  | UNKNOWN  | app_log
 - 2026-02-27 05:46:47 |  | UNKNOWN  | app_log
 - 2026-02-27 05:48:09 |  | UNKNOWN  | app_log
@@ -212,65 +211,54 @@
 - 2026-02-27 07:42:30 |  | UNKNOWN  | app_log
 
 ## Session Analysis
-### Session 172.19.0.1:42276
-- Risk: LOW
+### Session fe80::1078:ebff:fe42:2d77:143
+- Risk: HIGH
 - Inferred goal: unknown
 - Skill level: unknown
 - Actor type: human
 - Techniques used:
-  - N/A - No Malicious Technique (N/A)
+  - T1110 - Brute Force (Credential Access)
 - Key observations:
-  - 1776970945.498429 Normal Traffic (0.50): No strong malicious indicators detected.
+  - 1777044599.836089 Brute Force (0.60): Detected repeated authentication-related activity.
 
 ### Session unknown
-- Risk: LOW
+- Risk: HIGH
 - Inferred goal: unknown
 - Skill level: unknown
 - Actor type: human
 - Techniques used:
-  - N/A - No Malicious Technique (N/A)
+  - T1110 - Brute Force (Credential Access)
 - Key observations:
-  - 2026-02-27 05:46:47 Normal Traffic (0.50): No strong malicious indicators detected.
-  - 2026-02-27 05:46:47 Normal Traffic (0.50): No strong malicious indicators detected.
-  - 2026-02-27 05:48:09 Normal Traffic (0.50): No strong malicious indicators detected.
-  - 2026-02-27 05:48:09 Normal Traffic (0.50): No strong malicious indicators detected.
-  - 2026-02-27 05:49:12 Normal Traffic (0.50): No strong malicious indicators detected.
-  - 2026-02-27 05:49:18 Normal Traffic (0.50): No strong malicious indicators detected.
-  - 2026-02-27 05:49:18 Normal Traffic (0.50): No strong malicious indicators detected.
-  - 2026-02-27 05:49:18 Normal Traffic (0.50): No strong malicious indicators detected.
-  - 2026-02-27 05:49:18 Normal Traffic (0.50): No strong malicious indicators detected.
-  - 2026-02-27 05:49:18 Normal Traffic (0.50): No strong malicious indicators detected.
+  - 2026-02-27 05:46:47 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-02-27 05:46:47 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-02-27 05:48:09 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-02-27 05:48:09 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-02-27 05:49:12 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-02-27 05:49:18 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-02-27 05:49:18 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-02-27 05:49:18 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-02-27 05:49:18 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-02-27 05:49:18 Brute Force (0.60): Detected repeated authentication-related activity.
 
-### Session ::ffff:172.19.0.1
-- Risk: HIGH
+### Session ::ffff:172.18.0.1
+- Risk: CRITICAL
 - Inferred goal: credential access
 - Skill level: low
 - Actor type: human
 - Techniques used:
   - T1110 - Brute Force (Credential Access)
-- Key observations:
-  - 2026-04-23T14:03:43.524000 Brute Force (0.60): Detected repeated authentication-related activity.
-  - 2026-04-23T14:03:45.468000 Brute Force (0.60): Detected repeated authentication-related activity.
-  - 2026-04-23T14:03:47.141000 Brute Force (0.60): Detected repeated authentication-related activity.
-  - 2026-04-23T14:03:50.979000 Brute Force (0.60): Detected repeated authentication-related activity.
-  - 2026-04-23T14:03:53.006000 Brute Force (0.60): Detected repeated authentication-related activity.
-  - 2026-04-23T14:03:57.160000 Brute Force (0.60): Detected repeated authentication-related activity.
-  - 2026-04-23T14:03:58.707000 Brute Force (0.60): Detected repeated authentication-related activity.
-  - 2026-04-23T14:04:00.980000 Brute Force (0.60): Detected repeated authentication-related activity.
-  - 2026-04-23T14:04:02.138000 Brute Force (0.60): Detected repeated authentication-related activity.
-  - 2026-04-23T14:04:04.069000 Brute Force (0.60): Detected repeated authentication-related activity.
-
-### Session 172.19.0.1
-- Risk: CRITICAL
-- Inferred goal: unknown
-- Skill level: unknown
-- Actor type: human
-- Techniques used:
   - T1190 - Exploit Public-Facing Application (Initial Access)
-  - N/A - No Malicious Technique (N/A)
 - Key observations:
-  - 2026-04-23T16:03:27.507000 SQL Injection (0.78): Detected SQL injection keywords or tautology patterns.
-  - 2026-04-23T16:21:02.750000 Normal Traffic (0.50): No strong malicious indicators detected.
+  - 2026-04-24T15:18:11.389000 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-04-24T15:18:11.416000 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-04-24T15:18:11.430000 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-04-24T15:18:12.366000 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-04-24T15:18:12.377000 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-04-24T15:18:12.483000 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-04-24T15:18:12.485000 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-04-24T15:18:12.500000 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-04-24T15:18:12.502000 Brute Force (0.60): Detected repeated authentication-related activity.
+  - 2026-04-24T15:19:09.436000 Brute Force (0.60): Detected repeated authentication-related activity.
 
 ## Recommendations
 - Add strict input validation and output encoding for user-controlled fields.

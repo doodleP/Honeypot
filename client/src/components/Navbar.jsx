@@ -85,6 +85,8 @@ function Navbar() {
     e.preventDefault()
     const q = searchQuery.trim()
     if (q) {
+      // VULNERABILITY: Search query passed unsanitized to URL
+      // Can inject XSS payload like: <img src=x onerror="alert('XSS')">
       navigate(`/?search=${encodeURIComponent(q)}`)
       setSearchOpen(false)
       setSearchQuery('')
@@ -108,7 +110,6 @@ function Navbar() {
           <Link to="/cart">Cart</Link>
           <Link to="/reviews">Reviews</Link>
           <Link to="/coupons">Coupons</Link>
-          <Link to="/admin">Admin</Link>
 
           {/* Search pill */}
           <div className="search-container" ref={searchRef}>

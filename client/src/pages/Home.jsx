@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import './Home.css'
 
 const slides = [
@@ -39,6 +40,8 @@ function Home() {
   const [toast, setToast] = useState(null)
   const [fading, setFading] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState('All')
+  const [searchParams] = useSearchParams()
+  const searchQuery = searchParams.get('search') || ''
 
   const products = [
     { id: 1, name: 'Glowing Serum', price: 49.99, image: '/images/Serum.jpg', tag: 'Bestseller', category: 'Serum' },
@@ -62,6 +65,16 @@ function Home() {
 
   const filteredProducts = products.filter((product) => {
     const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory
+    
+    // VULNERABILITY: Search filtering without proper sanitization
+    // If searchQuery is provided, filter by name/category
+    if (searchQuery) {
+      const lowerQuery = searchQuery.toLowerCase()
+      const matchesSearch = product.name.toLowerCase().includes(lowerQuery) || 
+                           product.category.toLowerCase().includes(lowerQuery) ||
+                           product.tag.toLowerCase().includes(lowerQuery)
+      return matchesCategory && matchesSearch
+    }
 
     return matchesCategory
   })
@@ -144,22 +157,35 @@ function Home() {
       <div className="products-section">
         <div className="container">
           <div className="section-header">
-            <h2 className="section-title">Our Products</h2>
+            <h2 className="section-title">
+              {searchQuery ? (
+                // VULNERABILITY: XSS - Search query displayed without sanitization
+                // Attacker can inject: <img src=x onerror="alert('XSS')">
+                // Or: <script>alert('XSS')</script>
+                <span>
+                  Search Results for: <span dangerouslySetInnerHTML={{ __html: searchQuery }} />
+                </span>
+              ) : (
+                'Our Products'
+              )}
+            </h2>
             <div className="section-controls">
               <span className="section-subtitle">{filteredProducts.length} items</span>
-              <label className="category-select-wrap" htmlFor="category-filter">
-                Categories
-                <select
-                  id="category-filter"
-                  className="category-select"
-                  value={selectedCategory}
-                  onChange={(event) => setSelectedCategory(event.target.value)}
-                >
-                  {categories.map((category) => (
-                    <option key={category} value={category}>{category}</option>
-                  ))}
-                </select>
-              </label>
+              {!searchQuery && (
+                <label className="category-select-wrap" htmlFor="category-filter">
+                  Categories
+                  <select
+                    id="category-filter"
+                    className="category-select"
+                    value={selectedCategory}
+                    onChange={(event) => setSelectedCategory(event.target.value)}
+                  >
+                    {categories.map((category) => (
+                      <option key={category} value={category}>{category}</option>
+                    ))}
+                  </select>
+                </label>
+              )}
             </div>
           </div>
 
