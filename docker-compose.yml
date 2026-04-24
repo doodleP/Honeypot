@@ -32,7 +32,12 @@ services:
       OLLAMA_MODEL: llama3.1:8b
     depends_on:
       - mongodb
-      - ollama
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3001/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
     volumes:
       - ./server:/app
       - /app/node_modules
@@ -158,6 +163,11 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
     command:
       - serve
     networks:
@@ -178,7 +188,6 @@ services:
       - mongodb
       - backend
       - zeek
-      - ollama
     working_dir: /app/threat-intel
     volumes:
       - ./:/app

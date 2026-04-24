@@ -62,17 +62,26 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Internal server error' });
 });
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/honeyglow')
-  .then(() => {
-    logger.info('Connected to MongoDB');
-    app.listen(PORT, () => {
-      logger.info(`HoneyGlow Trap Backend running on port ${PORT}`);
+// Connect to MongoDB with retry logic
+const connectDB = (retries = 5, delay = 5000) => {
+  mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/honeyglow')
+    .then(() => {
+      logger.info('Connected to MongoDB');
+      app.listen(PORT, () => {
+        logger.info(`HoneyGlow Trap Backend running on port ${PORT}`);
+      });
+    })
+    .catch((error) => {
+      if (retries > 0) {
+        logger.warn(`MongoDB connection failed. Retrying in ${delay / 1000}s... (${retries} retries left)`, error.message);
+        setTimeout(() => connectDB(retries - 1, Math.min(delay * 2, 30000)), delay);
+      } else {
+        logger.error('MongoDB connection failed after all retries:', error);
+        process.exit(1);
+      }
     });
-  })
-  .catch((error) => {
-    logger.error('MongoDB connection error:', error);
-    process.exit(1);
-  });
+};
+
+connectDB();
 
 module.exports = app;

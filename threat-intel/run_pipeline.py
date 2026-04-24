@@ -102,12 +102,29 @@ def parse_json_array(log_path: Path) -> list[dict[str, Any]]:
 
 
 def load_mongo_logs(mongo_uri: str, db_name: str) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
-    client = MongoClient(mongo_uri, serverSelectionTimeoutMS=3000)
-    db = client[db_name]
-
-    attack_logs = list(db["attacklogs"].find().limit(5000))
-    sessions = list(db["attackersessions"].find().limit(5000))
-    return attack_logs, sessions
+    import time
+    retries = 5
+    delay = 2
+    
+    for attempt in range(retries):
+        try:
+            client = MongoClient(mongo_uri, serverSelectionTimeoutMS=5000)
+            # Test the connection
+            client.admin.command('ping')
+            db = client[db_name]
+            
+            attack_logs = list(db["attacklogs"].find().limit(5000))
+            sessions = list(db["attackersessions"].find().limit(5000))
+            return attack_logs, sessions
+        except Exception as e:
+            if attempt < retries - 1:
+                print(f"MongoDB connection failed (attempt {attempt + 1}/{retries}): {e}")
+                print(f"Retrying in {delay}s...")
+                time.sleep(delay)
+                delay = min(delay * 2, 30)  # Exponential backoff, max 30s
+            else:
+                print(f"Failed to connect to MongoDB after {retries} attempts")
+                raise
 
 
 def normalize_zeek_http(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -522,7 +539,29 @@ def main() -> None:
 
     index = build_index(normalized_logs)
     retriever = index.as_retriever(similarity_top_k=5)
-    llm = Ollama(model=args.model, base_url=args.ollama_base_url, request_timeout=120.0)
+    
+    # Try to initialize Ollama with retries
+    llm = None
+    ollama_retries = 5
+    ollama_delay = 2
+    for attempt in range(ollama_retries):
+        try:
+            llm = Ollama(model=args.model, base_url=args.ollama_base_url, request_timeout=120.0)
+            # Test the connection by pinging Ollama
+            import requests
+            requests.get(f"{args.ollama_base_url}/api/tags", timeout=5)
+            print("Successfully connected to Ollama")
+            break
+        except Exception as e:
+            if attempt < ollama_retries - 1:
+                print(f"Ollama connection failed (attempt {attempt + 1}/{ollama_retries}): {e}")
+                print(f"Retrying in {ollama_delay}s...")
+                import time
+                time.sleep(ollama_delay)
+                ollama_delay = min(ollama_delay * 2, 30)
+            else:
+                print(f"Failed to connect to Ollama after {ollama_retries} attempts. Using heuristic classification only.")
+                llm = None
 
     grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for log in normalized_logs:
@@ -536,11 +575,20 @@ def main() -> None:
             context_snippets = [node.get_content() for node in retrieved]
             enriched_log = dict(log)
             enriched_log["retrieved_context"] = context_snippets
-            classification = classify_attack(llm, enriched_log)
+            
+            if llm:
+                classification = classify_attack(llm, enriched_log)
+            else:
+                classification = heuristic_classify_attack(enriched_log)
+                
             mitre = map_to_mitre(classification["attack_type"])
             classified.append({"log": log, "classification": classification, "mitre": mitre})
 
-        intent = infer_intent(llm, session_logs)
+        if llm:
+            intent = infer_intent(llm, session_logs)
+        else:
+            intent = {"goal": "Unknown", "skill_level": "Unknown", "human_or_automated": "Unknown"}
+            
         risk = risk_from_attack_types([item["classification"]["attack_type"] for item in classified])
         per_session_analysis.append(
             {

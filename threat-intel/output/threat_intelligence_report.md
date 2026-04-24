@@ -1,16 +1,16 @@
 # Threat Intelligence Report
 
 ## Summary
-- Total normalized events: 4094
-- Sessions analyzed: 4
+- Total normalized events: 4100
+- Sessions analyzed: 5
 - Overall risk level: CRITICAL
 - Attack type distribution:
-  - Normal Traffic: 32
+  - Normal Traffic: 35
   - Brute Force: 30
   - SQL Injection: 1
 
 ## Attack Timeline
-- 1776970945.498429 | 172.19.0.1 | GET  | zeek_http
+- 1777003924.986691 | fe80::7c1c:5eff:fe2e:6a22 | GET  | zeek_http
 - 2026-02-27 05:46:47 |  | UNKNOWN  | app_log
 - 2026-02-27 05:46:47 |  | UNKNOWN  | app_log
 - 2026-02-27 05:48:09 |  | UNKNOWN  | app_log
@@ -212,7 +212,7 @@
 - 2026-02-27 07:42:30 |  | UNKNOWN  | app_log
 
 ## Session Analysis
-### Session 172.19.0.1:42276
+### Session fe80::7c1c:5eff:fe2e:6a22:143
 - Risk: LOW
 - Inferred goal: unknown
 - Skill level: unknown
@@ -220,7 +220,7 @@
 - Techniques used:
   - N/A - No Malicious Technique (N/A)
 - Key observations:
-  - 1776970945.498429 Normal Traffic (0.50): No strong malicious indicators detected.
+  - 1777003924.986691 Normal Traffic (0.50): No strong malicious indicators detected.
 
 ### Session unknown
 - Risk: LOW
@@ -271,6 +271,18 @@
 - Key observations:
   - 2026-04-23T16:03:27.507000 SQL Injection (0.78): Detected SQL injection keywords or tautology patterns.
   - 2026-04-23T16:21:02.750000 Normal Traffic (0.50): No strong malicious indicators detected.
+
+### Session ::1
+- Risk: LOW
+- Inferred goal: unknown
+- Skill level: unknown
+- Actor type: human
+- Techniques used:
+  - N/A - No Malicious Technique (N/A)
+- Key observations:
+  - 2026-04-24T04:28:33.838000 Normal Traffic (0.50): No strong malicious indicators detected.
+  - 2026-04-24T04:28:44.119000 Normal Traffic (0.50): No strong malicious indicators detected.
+  - 2026-04-24T04:28:54.370000 Normal Traffic (0.50): No strong malicious indicators detected.
 
 ## Recommendations
 - Add strict input validation and output encoding for user-controlled fields.
