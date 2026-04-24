@@ -18,3 +18,4 @@ threat-intel/.venv/
 threat-intel/.venv311/
 threat-intel/output/threat_intelligence_report.md
 threat-intel/output/threat_intelligence_report.pdf
+server/logs/combined.log
